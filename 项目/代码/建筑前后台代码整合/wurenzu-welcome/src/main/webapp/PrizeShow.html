@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html ng-app="prizeapp">
+	<head>
+		<meta charset="utf-8" />
+		<title>Prize-Show</title>
+		<link rel="stylesheet" type="text/css" media="all" href="css/prize.css" /> 
+		<style type="text/css">
+		*{
+			padding: 0;
+			margin: 0;
+		}
+		body {
+            background: black;
+        }
+		</style>
+		 <script src="js/angular.js" type="text/javascript" charset="UTF-8"></script>
+         <script src="js/jquery.min.js" type="text/javascript" charset="UTF-8"></script>
+         <script type="text/javascript">
+        //用于判断用户是否登录
+         $(function(){
+    	  verify();
+      });
+        
+        function verify(){
+        	var name =  window.localStorage.getItem("name");
+            if(name==""||name==null){
+            	alert("请登录后访问!");
+                window.location.href="welcome.html";
+            }
+        }
+        </script>
+	</head>
+	
+	<body ng-controller="prizectl">
+		<!--顶部期数菜单-->
+		<div class="div-prize-show-top-all"> <!-- $index为切换的期数；b为总期数 -->
+		   <div ng-repeat=" termprize in priworks track by $index" id="topButton{{$index+1}}" ng-click="show($index,$maxperiod)" 
+		   ng-mouseover="topOver($event)" ng-mouseleave="topLeave($event)" class="div-prize-show-top-all-item">
+				<span>第{{maxperiod-$index}}期</span>
+			</div>
+	
+		</div>
+		
+		<!--获奖内容  显示作品名称和图片  期数 公司名 key表示公司名  value表示每一期的作品  term 是期数 -->
+		<div ng-repeat="termprize in priworks track by $index" id="term{{$index+1}}" style="visibility: visible;"  class="div-prize-container-out">
+		<!--***************************************************************************-->
+			<div id="wrap{{$index+1}}" >
+				<ul>                        
+					<li ng-repeat="prizework in termprize track by $index"  id="imgli{{$index+1}}" ng-style="{'background-image': 'url('+prizework.imgUrl+')', 'background-size':'cover'}"
+					ng-mouseover="loadover($event,$index)">
+						<p >No{{$index+1}}:<br/>{{prizework.workname}}</p>
+					</li>
+					
+				</ul>
+			</div>
+		</div>
+		
+	
+			<script type="text/javascript" src="js/server.js" charset="UTF-8"></script>
+		<script src="js/snowflakes.min.js" type="text/javascript" charset="UTF-8"></script>
+		<script src="js/prizeshow.js" type="text/javascript" charset="UTF-8"></script>
+	
+		
+	</body>
+	
+</html>

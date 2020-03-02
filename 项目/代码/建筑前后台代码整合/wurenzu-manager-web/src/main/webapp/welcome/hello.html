@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+呵呵呵 
+
+</body>
+
+<script type="text/javascript">
+
+function token_verify(){
+	console.info("token验证执行了");
+	var userId=localStorage.userId;
+	var token=localStorage.token;
+	$.ajax({
+		url:'http://localhost:8888/user/verify',
+		type:'get',
+		dataType:'json',
+		data:{"userId":userId,"token":token},
+		success:function(result){
+			var flag=false;
+			if(result.code==0){
+				window.location.href='user_center.jsp';
+				flag=ture;
+			}
+			
+			if(flag==false){
+				alert("对不起，请先登录");
+			}
+			
+		}
+	});
+	
+}
+
+</script>
+</html>

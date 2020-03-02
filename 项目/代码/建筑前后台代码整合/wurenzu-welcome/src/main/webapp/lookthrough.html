@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html ng-app="entriesapp">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" media="all" href="css/lookthrough.css" /> 
+		<title>浏览展品</title>
+		<style type="text/css">
+			*{
+				padding: 0;
+				margin: 0;
+			}
+		
+		</style>
+		 <script src="js/angular.js" type="text/javascript" charset="UTF-8"></script>
+         <script src="js/jquery.min.js" type="text/javascript" charset="UTF-8"></script>
+         <script type="text/javascript">
+         $(function(){
+       	  verify();
+         });
+           
+           function verify(){
+           	var name =  window.localStorage.getItem("name");
+               if(name==""||name==null){
+               	alert("请登录后访问!");
+                   window.location.href="welcome.html";
+               }
+           }
+        </script>
+	</head>
+	<body ng-controller="entrctl">
+		<!--左侧菜单 -->
+		<div class="div-look-left">
+		    <!-- entries是所有最新一期所有状态码为1的参赛作品信息 key 存储企业信息 value存储作品信息 -->
+		     <div ng-repeat="(key,value) in entries track by $index" id="entriy{{$index}}" ng-click="huadong($index)" class="div-look-left-item" ng-mouseover="huadongOver($event)" 
+		    ng-mouseleave="huadongLeave($event)"  ng-style="{'background': 'url('+value.imgUrl+')', 'background-size':'100% 100%'}">
+		     
+		    </div>
+		    
+		 
+		</div>
+		<!--背景详情-->
+		
+		
+		
+		<!-- 考虑把每一期的参赛作品都查出来 按期数 分数排序 -->
+		<div ng-repeat="(key,value) in entries track by $index" id="item{{$index}}" class="div-look-bg" ng-style="{'background':'url('+value.imgUrl+')', 'background-size':'100% 100%','background-attachment': 'fixed'}">
+			<h1>第{{value.period}}期参赛作品    {{value.workname}}</h1>
+			<h2>参赛企业：{{key}}</h2><!-- 这里的名称是： 企业名+workid的形式 后期建议用angular把workid过滤 -->
+			<h3>项目详情：{{value.details}}</h3>
+			
+		</div>
+			<script type="text/javascript" src="js/server.js" charset="UTF-8"></script>
+		<script src="js/entries.js" type="text/javascript" charset="UTF-8"></script>
+	</body>
+</html>

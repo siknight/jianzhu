@@ -1,0 +1,1 @@
+var managerserver="http://localhost:8081";

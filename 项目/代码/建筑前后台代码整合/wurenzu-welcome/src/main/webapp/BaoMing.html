@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<script src="js/jquery.js"></script>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<title>报名参与</title>
+		<script type="text/javascript" src="js/jquery.min.js" charset="UTF-8"></script> 
+        <script type="text/javascript" src="js/layer/layer.js"  charset="UTF-8"></script>
+        <script type="text/javascript">
+        //用于判断用户是否登录
+         var name =  window.localStorage.getItem("name");
+        if(name=="null"){
+        	alert("请登录后访问!");
+            window.location.href="welcome.html";
+        }
+        </script>
+		<style type="text/css">
+	*{
+		margin: 0;
+		padding: 0;
+	}
+	.div-baoming-BG{
+		position: absolute;
+		margin: 0;
+		padding: 0;
+		width: 100%;
+		height: 100%;
+		background: url(images/BaoMingBG1.jpg) no-repeat;
+		background-size:100% 100%; 
+		
+	}
+	.div-baoming-middle{
+		background:url(images/baoming-center.png) no-repeat;
+		z-index: 1;
+		position: absolute;
+		top: 20%;
+		left: 13%;
+		width: 1200px;
+		height: 500px;		
+		background-position: center;
+		background-size: 100% 100%;
+		/*opacity: 0.95;*/		
+	}
+	.div-baoming-middle-in{
+		/*background-color: wheat;*/
+		/*background: rgba(0,0,0,0.3);*/
+		opacity: 0.9;
+		border: 2.5px solid;
+		border-color: deepskyblue;
+		box-shadow: 5px 10px 10px deepskyblue;
+		border-radius:25px;
+		z-index: 2;
+		position: absolute;
+		top: 8%;
+		left: 31.5%;
+		height: 600px;
+		width: 600px;
+		text-align: center;
+		line-height: 50px;	
+		/*padding-top: 10%;*/
+	}
+	.div-baoming-middle-in input{
+		 background-color:rgba(208, 244, 244, 0.7);
+		 outline: none;
+         border: 1px solid;
+         border-color: deepskyblue;
+         border-radius: 10px ;
+         height: 50px;
+         width: 300px;
+         text-align: center;
+         font-family :"arial black";
+         color: black;
+	}
+	.div-baoming-middle-in textarea{
+		 background-color:rgba(208, 244, 244, 0.7);
+		 outline: none;
+         border: 1px solid;
+         border-color: deepskyblue;
+         border-radius: 10px ;
+         height: 100px;
+         width: 100%;
+         text-align: center;
+         font-family :"arial black";
+         color: black;
+	}
+	.div-baoming-middle-in h1{
+		font-family: "楷体";
+		color: white;
+		font-size: xx-large;
+		font-weight:bold;
+		background: none;
+		top: 15px;
+	}
+	.div-baoming-middle-in label{
+		font-family: "楷体";
+		color: white;
+		font-size: larger;
+		font-weight:bold;
+		background: none;
+		top: 30px;
+	}
+	.div-baoming-item-title{
+		height: 100px;
+		position:relative;
+		width: 100%;
+		/*border: 1px solid;
+		border-color: dimgrey;
+		box-shadow: 0px 2px 5px deeppink;
+		border-radius:15px;*/
+		text-align: center;
+		padding-top: 30px;
+	}
+	.div-baoming-item1{
+		height: 100px;
+		position:relative;
+		width: 100%;
+		/*border: 1px solid;
+		border-color: dimgrey;
+		box-shadow: 0px 2px 5px deeppink;
+		border-radius:15px;*/
+		text-align: left;
+		padding-top: 35px;
+	}
+	.div-baoming-item2{
+		height: 60px;
+		position:relative;
+		width: 100%;
+		/*border: 1px solid;
+		border-color: dimgrey;
+		box-shadow: 0px 2px 5px deeppink;
+		border-radius:15px;*/
+		text-align: left;
+		padding-top: 35px;
+	}
+	.div-baoming-item3{
+		height: 100px;
+		position:relative;
+		width: 100%;
+		/*border: 1px solid;
+		border-color: dimgrey;
+		box-shadow: 0px 2px 5px deeppink;
+		border-radius:15px;*/
+		text-align: left;
+		padding-top: 35px;
+	}
+	/*.div-baoming-item3 input{
+		width: 400px;
+	}*/
+	/*textarea*/
+	.div-baoming-item4{
+		height: 100px;
+		position:relative;
+		width: 100%;
+		/*border: 1px solid;
+		border-color: dimgrey;
+		box-shadow: 0px 2px 5px deeppink;
+		border-radius:15px;*/
+		text-align: left;
+		padding-top: 10px;
+		padding-left: 30px ;
+	}
+	/*button*/
+	.div-baoming-item5{
+		height: 100px;
+		position:relative;
+		width: 100%;
+		padding-top: 10px;
+		/*padding-left: 15%;*/
+	}
+	/*.div-baoming-item5 input{
+		width: 300px;
+	}*/
+	.div-baoming-item5 input{
+		 background-color:rgba(242, 249, 255, 0.9);
+		 outline: none;
+         border: 1px solid;
+         border-color: deepskyblue;
+         border-radius: 10px ;
+         height: 50px;
+         width: 300px;
+         text-align: center;
+         font-family :"arial black";
+         color: black;
+	}
+</style>
+	</head>
+	<body>
+		<div class="div-baoming-BG"></div>
+		<div class="div-baoming-middle"></div>
+		<!--中间报名表-->
+		<div class="div-baoming-middle-in">
+			<form action="#">
+			     <div class="div-baoming-item-title">
+			     	<h1 id="canjiahead">项目参赛快速通道</h1>
+			     </div>
+                 <table class="table table-striped table-dark">
+                 	<tbody>
+                       <tr>
+                          <td><label>项目作品名称</label></td>
+                          <td><input type="text" aria-label="First name" name="itemname" id="firmname"></td>
+                       </tr>
+                       <tr>
+                       <td>作品描述</td>
+                       <td><textarea class="form-control" aria-label="With textarea" name="workinfo" id="workinfo"></textarea></td>
+                       </tr>
+                       <tr>
+                       <td>作品图片</td>
+                       <td><input id="shangchuan" type="file"  aria-describedby="inputGroupFileAddon04"></td>
+                       </tr>
+                       </tbody>
+                       
+                 </table>
+                 <div class="div-baoming-item5">
+                 <input onclick="baomin()" type="button" class="btn btn-outline-success btn-lg btn-block"  value="报名" style="size: a5;"/>
+                 </div>
+                 <div style="width: 100%;height: 40px;padding-top: 10px;padding-left: 80%;"><a href="welcome.html" style="color: white;font-size: x-large;font-weight: bolder;">返回</a></div>
+   	        </form>
+		</div>
+		
+		
+			<script type="text/javascript" src="js/server.js" charset="UTF-8"></script>
+		<script type="text/javascript" src="js/baoming.js" charset="UTF-8"></script>
+	</body>
+	<!--<script type="text/javascript">
+          var dragImgUpload = new DragImgUpload("#shangchuan",{
+	      callback:function (files) {
+	    	//回调函数，可以传递给后台等等
+	    	var file = files[0];
+		    console.log(file.name);
+	    }
+  })
+</script>-->
+</html>

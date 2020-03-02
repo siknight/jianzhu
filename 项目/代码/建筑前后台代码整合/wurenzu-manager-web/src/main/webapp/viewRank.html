@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+</head>
+<body>
+<div>
+ <div style="float: left">
+		
+		 <nav aria-label="...">
+		  <ul class="pagination">
+		  <!-- class="page-item disabled" -->
+		    <li class="page-item">
+		      <a class="page-link" href="#" id="uppage">上一页</a>
+		    </li>
+		    <li class="page-item disabled">
+		      <a class="page-link" href="#" id="uppage">第<span id="pageNum" style="color:red;"></span>页</a>
+		    </li>
+		    <li class="page-item">
+		      <a class="page-link" href="#" id="nextpage">下一页</a>
+		    </li>
+		  </ul>
+		</nav>
+	
+	
+	</div>
+	<br/><br/>
+	<span id="updateinfo02" style="color: red;"></span>
+<br/>
+	<div>
+		<h3>排名  </h3>	
+		<div>排名:<span id="graderank" style="color:red"> </span></div>	
+		<div>作品名:<span id="workname"></span></div>	
+		<div>设计图:<br/><span id="imgUrl"></span></div>	
+		<div>描述:<span id="details"></span></div>
+		<div>公司名称:<span id="firmName"></span></div>
+		<div>公司法人:<span id="represent"></span></div>
+		<div>最终得分:<span id="gradeend" style="color:red"></span></div>
+		<div>
+			<span id="gradeExpert">已经打分的评委</span>:<br/>
+			<div id="grade">
+			
+			
+			</div>
+		</div>
+	
+	</div>
+	
+
+</div>
+
+
+
+
+
+<script type="text/javascript"
+		src="/manager/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/server.js"></script>
+<script>
+var pagenum=1;  //记录是哪页
+
+var workid="";  //作品id
+var pagesizeend="";  //总页
+var workrank=1;  //记录排名
+
+$(function(){
+	webIntercepter();
+	viewscore();
+	
+});
+
+function webIntercepter(){
+		var manager_name=window.localStorage.getItem("name");
+		var token=window.localStorage.getItem("token");
+		if(manager_name==null||manager_name==""||token==null||token==""){
+			window.location.href="/login.html";
+			return;
+		}
+	}
+//开始时先加载打分情况
+function viewscore(){
+   $("#updateinfo04").html("");
+   $("#updateinfo03").html("");
+   $("#updateinfo02").html("");
+ 
+   var expertScoreend=""; //用于标记该评委打分所在专家位置的下标
+   var id=window.localStorage.getItem("id");
+	console.info("该评委的id="+id);
+	$.ajax({
+		    url:"/manager/works/status/pageNum/row",
+            type:"get",
+            dataType:"json",
+            data:{"pageNum":pagenum,"status":1},
+            success:function(result){
+            	if(result.code==0||result.code==3){ //查询成功
+            		var data=result.data; //获取data
+            		$("#pageNum").html(pagenum);
+	            	for(var i=0;i<data.length;i++){  //遍历这个data
+	            		workid=data[i].workid;
+	            		var workname=data[i].workname;  //作品名
+	            		var pagesize=data[i].pagesize;
+	            		
+	            		pagesizeend=pagesize; //获取总页
+	            		$("#workname").html(workname);
+	            		var details=data[i].details;
+	            		$("#details").html(details);
+	            		var period=data[i].period;
+	            		var imgUrl=data[i].imgUrl;
+	            		$("#imgUrl").html('<img src="'+imgUrl+'"  style="width:200px;heigth:200px;" alt="图片">');
+	            		console.info("imgUrl="+imgUrl);
+	            		var firmuser=data[i].firmuser; //获取firmuser
+	            		var firmname=firmuser.firmName; //设计公司全称
+	            		$("#firmName").html(firmname);
+	            		var image=firmuser.image;
+	            		var firmDetail=firmuser.firmDetail;
+	            		var email=firmuser.email;
+	            		var phone=firmuser.phone;
+	            		var represent=firmuser.represent
+	            		$("#represent").html(represent);
+	            		var address=firmuser.address;
+	            		$("#address").html(address);
+	            		var exports=data[i].exports;
+	            		var grade=data[i].grade;
+	            		console.info("grade="+grade);
+	            		
+	            		
+	            		if(grade!=""){
+	            			$("#gradeend").html(grade);
+	            			$("#graderank").html('第'+workrank+'名');
+	            			
+	            		}else{
+	            			$("#gradeend").html("还有评委未打分,当前暂无最终分数");
+	            			$("#graderank").html("还有评委未打分,当前暂无排名");
+	            		}
+	            		 
+	            		
+	            		for(var j=0;j<exports.length;j++){  //判断该评委是否已经对该作品打分
+	            			var name=exports[j].name;
+	            			var expertScore=exports[j].expertScore.expertscore;
+	            			var str='';
+	            			str+='<span>'+name+':'+expertScore+'</span></br>';
+	            			$("#grade").append(str);
+	            			
+	            		}
+	            		
+	            		
+	            	}
+            	}
+            	
+            	
+            }
+	});
+	
+	
+	
+}
+	
+	
+	$("#uppage").click(function(){
+		$("#giveGrade").val("");
+		//scoreflag=false; 
+		$("#updateinfo02").html("");
+		$("#grade").html("");
+		if(pagenum==1){
+			$("#updateinfo02").html("已经是第一页");
+		}else{
+			pagenum-=1;
+			$("#pageNum").html(pagenum);
+			workrank-=1;
+			viewscore();
+		}
+		
+	});
+	
+$("#nextpage").click(function(){
+	//scoreflag=false; 
+	$("#giveGrade").val("");
+	$("#updateinfo02").html("");
+	$("#grade").html("");
+	if(pagenum==pagesizeend){
+			$("#updateinfo02").html("已经是最后一页");
+		}else{
+			pagenum+=1;
+			$("#pageNum").html(pagenum);
+			workrank+=1;
+			viewscore();
+		}
+	});
+	
+	
+</script>
+
+</body>
+</html>

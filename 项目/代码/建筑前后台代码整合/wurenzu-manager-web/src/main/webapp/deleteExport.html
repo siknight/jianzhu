@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h3>删除操作</h3>
+
+	<table id="content2">
+				<tr>
+					<td>id</td>
+					<td>用户名</td>
+					<td>性别</td>
+					<td>手机号</td>
+					<td>邮箱</td>
+					<td>头像</td>
+					<td>描述</td>
+					<td>操作</td>
+				</tr>
+	</table>
+	<h2 id="updateinfo03" style="color: red;"></h2>
+	<h2 id="updateinfo04" style="color: green;"></h2>
+<script type="text/javascript"
+		src="/manager/lib/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/server.js"></script>
+	<script>
+	var tr_id=1;
+		$(function(){
+			webIntercepter();
+			selectExportByroleId();
+		});
+		
+		
+		function webIntercepter(){
+   			var manager_name=window.localStorage.getItem("name");
+   			var token=window.localStorage.getItem("token");
+   			if(manager_name==null||manager_name==""||token==null||token==""){
+   				window.location.href="/login.html";
+   				return;
+   			}
+   		}
+
+		//查询所有评委信息
+	function selectExportByroleId(){
+		
+		$.ajax({
+			   url:"/manager/roleid",
+	            type:"get",
+	            dataType:"json",
+	            data:{},
+	            success:function(result){
+	            	
+	            	if(result.code==0){
+	            		var data=result.data;
+	            		for(var i=0;i<data.length;i++){
+	            		
+	            		
+	            			var str='';
+	            			
+	            			str+='<tr > <td>'+tr_id+'</td> <td>'+data[i].name+'</td> <td>'+data[i].sex+'</td><td>'+data[i].phone+'</td> <td>'+data[i].email+'</td> <td><img src="'+data[i].image+'"  style="width:50px;heigth:50px;" alt="图片"></td> <td>'+data[i].details+'</td> <td><button id="'+data[i].name+'" onclick="deleteByName(this,\''+data[i].name+'\')">删除</button></td> </tr>';
+	            			tr_id+=1;
+	            			$("#content2").append(str);
+	            			
+	            			
+	            		    
+	            		}
+	            		
+	            	}
+	            	
+	            },
+	            error:function(){
+	            	alert("网络错误，请稍后再试...");
+	            }
+			
+		});
+		
+	} 
+	
+	
+	//删除指定id评委
+	function deleteByName(_this,name){
+		
+		 $("#updateinfo01").html("");
+		 $("#updateinfo02").html("");
+		 $("#updateinfo03").html("");
+		 $("#updateinfo04").html("");
+		 console.info("删除方法执行了");
+		
+		
+		if(confirm("确定删除吗？")){
+	    	$.ajax({
+				    url:"/manager/exportdelete/"+name,
+		            type:"delete",
+		            dataType:"json",
+		            success:function(result){
+		            	if(result.code==0){
+		            		console.info("_this");
+		            		$(_this).parent().parent().remove();
+		            		tr_id-=1;
+		            		 //$(this).parents('tr').remove();
+		            		 $("#updateinfo04").html("删除成功");
+		            		// window.location.reload()
+		            		
+		            		
+		            		 
+		            	}
+		            },
+		            error:function(){
+		            	alert("网络错误,请售后再试....");
+		            }
+			});
+		}
+	}
+	
+	
+	
+	</script>
+</body>
+</html>

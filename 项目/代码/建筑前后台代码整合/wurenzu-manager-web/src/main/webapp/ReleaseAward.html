@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>发布奖品</title>
+</head>
+<body>
+<div >
+<h3>查看获奖作品信息</h3>
+
+		<table id="content2" >
+				<tr>
+				    <td>序号</td>
+					<td>公司名</td>
+					<td>公司图片</td>
+					<td>作品名</td>
+					<td>作品图片</td>
+					<td>分数</td>
+					<td>详情</td>
+					<td>奖品发布</td>
+					
+				</tr>
+			</table>
+			<span id="updateinfo02" style="font-size: large; color: red" ></span>
+</div>
+
+<script type="text/javascript"
+		src="/manager/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/server.js"></script>
+
+<script>
+var tr_id=1;
+	$(function(){
+		webIntercepter();
+		console.info("我执行了");
+		findwork();
+	});
+	
+	function webIntercepter(){
+			var manager_name=window.localStorage.getItem("name");
+			var token=window.localStorage.getItem("token");
+			if(manager_name==null||manager_name==""||token==null||token==""){
+				window.location.href="/login.html";
+				return;
+			}
+		}
+
+	//查询所前三名获奖人
+function findwork(){
+	
+	$.ajax({
+		   url:"http://localhost:8081/work/workid",
+            type:"get",
+            dataType:"json",
+            data:{},
+            success:function(result){
+            	if(result.code==0){
+            		var data=result.data;
+            		for(var i=0;i<data.length;i++){
+            			var str='';
+            			if(data[i].award==""||data[i].award==null){
+            			//str+='<tr > <td>'+tr_id+'<tr > <td>'+data[i].firmuser.firmName+'</td> <td>'+data[i].workname+'</td> <td>'+data[i].grade+'</td> <td>'+data[i].details+'</td> </tr>';
+            			str+='<tr > <td>'+tr_id+'</td> <td>'+data[i].firmuser.firmName+'</td> <td><img src="'+data[i].firmuser.image+'" style="width:80px; heigth:80px;" alt="图片"></td> <td>'+data[i].workname+'</td> <td><img src="'+data[i].imgUrl+'" style="width:80px; heigth:80px;" alt="图片"></td> <td>'+data[i].grade+'</td> <td>'+data[i].details+
+            			'</td> <td><button  onclick="updateById(this,'+data[i].workid+','+tr_id+')">发布奖品</button></td> </tr>';
+            			tr_id+=1;
+            			$("#content2").append(str);
+            			}else{
+            				str+='<tr > <td>'+tr_id+'</td> <td>'+data[i].firmuser.firmName+'</td> <td><img src="'+data[i].firmuser.image+'" style="width:80px; heigth:80px;" alt="图片"></td> <td>'+data[i].workname+'</td> <td><img src="'+data[i].imgUrl+'" style="width:80px; heigth:80px;" alt="图片"></td> <td>'+data[i].grade+'</td> <td>'+data[i].details+
+                			'</td> <td>奖品已发布</td> </tr>';
+                			tr_id+=1;
+                			$("#content2").append(str);
+            			}
+            		}
+            	}
+            },
+            error:function(){
+            	alert("网络错误，请稍后再试...");
+            }
+	});
+} 
+	
+	//发放奖品
+function updateById(_this,workid,aid){
+	//alert("nihoa");
+	
+	//修改
+	
+
+	$("#updateinfo01").html("");
+	if(confirm("确定要发放奖品么？")){
+		
+		
+		$.ajax({
+			    url:"/award/updateaward",
+	            type:"put",
+	            dataType:"json",
+	            data:{"workid":workid,"aid":aid},
+	            success:function (result) {
+	            	console.info("code="+result.code);
+	            	if(result.code==0){
+	            		console.info("code="+0);
+		      	        $("#updateinfo02").html("恭喜您，发布成功");
+		      	       $(_this).parent().parent().children('td').each(function(j){  // 遍历 tr 的各个 td
+		      	    	  		console.info("j="+j);
+		  			 	  if(j==7){
+		  			 		 $(this).html("恭喜你,奖品发布成功");
+		  			 	  }
+		             });
+	            	}
+	            },
+
+	            error:function(){
+	            	alert("网络错误");
+	            }
+
+		});
+
+	}
+
+
+}
+
+</script>
+</body>
+</html>

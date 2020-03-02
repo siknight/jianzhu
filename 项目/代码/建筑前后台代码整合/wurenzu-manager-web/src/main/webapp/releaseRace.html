@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<div>
+		<div float:left>
+			<h3>发布比赛</h3>
+			比赛名：<input id="raceName" type="text" value="" placeholder="请输入要发布的比赛名"><br /><br />
+			比赛期数：第<input id="period" type="text" value="" placeholder="请输入比赛的期数">期    <span style="color:red">(请填入阿拉伯数字)</span>  <br /><br />
+			海报:<input id="picture" type="file" ><br />
+			比赛描述：<br />
+			<textarea id="details" rows="5" cols="50"></textarea>
+
+			<h2 id="updateinfo01" style="color: red;"></h2>
+			<h2 id="updateinfo02" style="color: green;"></h2>
+			<button id="add">添加</button>
+		</div>
+
+
+
+		<div style="float: left">
+			<h3>添加的正在进行比赛</h3>
+			
+			<table id="content2">
+				<tr>
+					<td>id</td>
+					<td>比赛名</td>
+					<td>期数</td>
+					<td>海报</td>
+					<td>比赛描述</td>
+					<td>操作</td>
+				</tr>
+			</table>
+			<h2 id="updateinfo03" style="color: red;"></h2>
+			<h2 id="updateinfo04" style="color: green;"></h2>
+		</div>
+	</div>
+	<script type="text/javascript"
+		src="/manager/lib/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/server.js"></script>
+	
+	<script>
+	
+		   var flag=false;  //false表示没有发布过一个比赛
+		   var tr_id=1;
+			$(function(){
+				webIntercepter();
+				selectRaceByStatus();
+			});
+			
+			
+			function webIntercepter(){
+	   			var manager_name=window.localStorage.getItem("name");
+	   			var token=window.localStorage.getItem("token");
+	   			if(manager_name==null||manager_name==""||token==null||token==""){
+	   				window.location.href="/login.html";
+	   				return;
+	   			}
+	   		}
+
+				//查询已经发布的正在进行的比赛
+			function selectRaceByStatus(){
+				
+				$.ajax({
+					    url:"/manager/race/status",
+			            type:"get",
+			            dataType:"json",
+			            data:{"status":1},
+			            success:function(result){
+			            	console.info("result.code=="+result.code);
+			            	if(result.code==0){
+			            		var data=result.data;
+			            		if(data==""){
+			            			return;
+			            		}
+			            		
+			            			flag=true;
+			            			console.info("1:"+flag);
+			            			var str='';
+			            			
+			            			str+='<tr > <td>'+tr_id+'</td> <td>'+data.raceName+'</td> <td>第'+data.period+'期</td> <td><img src="'+data.imgUrl+'"  style="width:50px;heigth:50px;" alt="图片"></td> <td>'+data.details+'</td> <td><button onclick="deleteByStatus(this)">删除</button></td> </tr>';
+			            			tr_id+=1;
+			            			$("#content2").append(str);
+			            			
+			            			
+			            		    
+			            		
+			            		
+			            	}
+			            	
+			            },
+			            error:function(){
+			            	alert("网络错误，请稍后再试...");
+			            }
+					
+				});
+				
+			} 
+				
+				
+				
+			//添加比赛
+			   
+	   		$("#add").click(function(){
+		   		 $("#updateinfo01").html("");
+				 $("#updateinfo02").html("");
+				 $("#updateinfo03").html("");
+				 $("#updateinfo04").html("");
+				
+	   			var raceName =$("#raceName").val();
+				
+				var period=$("#period").val();
+				var details=$("#details").val();
+				
+				if(raceName==""){
+					 $("#updateinfo01").html("比赛名为空,请重新输入");
+					 return;
+				}
+				
+				if(period==""){
+					 $("#updateinfo01").html("期数为空,请重新输入");
+					 return ;
+				}
+				if(details==""){
+					 $("#updateinfo01").html("比赛描述为空,请重新输入");
+					 return ;
+				}
+				if(isNaN(period)){
+					 $("#updateinfo01").html("期数输入的不是阿拉伯数字,请重新输入");
+					 return ;
+				}
+				
+				if($("#picture")[0].files[0]==null||$("#picture")[0].files[0]==""){
+			 		  $("#updateinfo01").html("对不起,你还未添加海报,请添加后再提交");
+						 return ;
+			 	}
+				
+			 	//false表示没有比赛可以添加 true表示已经添过比赛
+			   if(flag){
+				   $("#updateinfo01").html("对不起,你已经添加过比赛,不可以再添加");
+					 return ;
+			  }
+			 	
+			 	
+			 //Formdata提交图片
+				 var formData = new FormData();
+				 formData.append("raceName",raceName);
+				 formData.append("details",details);
+				 formData.append("period",period);
+				 formData.append("uploadFile", $("#picture")[0].files[0]);
+				 
+				
+				$.ajax({
+					   url:"/manager/race",
+					  // url:managerserver+"/manager/race",
+					   // url:"/manager/race",
+			            type:"post",
+			           // dataType:"json",
+			           // data:{"raceName":raceName,"details":details,"period":period},
+			            data: formData,
+       					processData: false,
+       					contentType: false,
+			            success:function(result){
+			            	
+			            	if(result.code==0){
+			            		 $("#updateinfo02").html("恭喜你,添加成功");
+			            		   flag=true;
+			            			var str='';
+			            			
+			            			str+='<tr > <td>'+tr_id+'</td> <td>'+raceName+'</td> <td>第'+period+'期</td><td><img src="'+result.data.img+'"  style="width:50px;heigth:50px;" alt="图片"></td> <td>'+details+'</td> <td><button onclick="deleteByStatus(this)">删除</button></td> </tr>';
+			            			tr_id+=1;
+			            			
+			            			$("#content2").append(str);
+			            	}else if(result.code==2){
+			            		 $("#updateinfo01").html("已经发布过比赛");
+			            	}
+			            },
+			            error:function(){
+			            	alert("网络错误,请售后再试....");
+			            }
+				});
+				
+	   		});
+	   		
+	   
+	
+				function deleteByStatus(_this){
+					
+					 $("#updateinfo01").html("");
+		    		 $("#updateinfo02").html("");
+		    		 $("#updateinfo03").html("");
+		    		 $("#updateinfo04").html("");
+		    		 console.info("删除方法执行了");
+		    		
+		    		
+		    		if(confirm("确定删除吗？")){
+				    	$.ajax({
+							    url:managerserver+"/manager/race/1",
+					            type:"delete",
+					            dataType:"json",
+					            success:function(result){
+					            	console.info("code==="+result.code);
+					            	if(result.code==0){
+					            		console.info("_this");
+					            		$(_this).parent().parent().remove();
+					            		 //$(this).parents('tr').remove();
+					            		 tr_id-=1;
+					            		 flag=false;
+					            		 $("#updateinfo04").html("删除成功");
+					            		// window.location.reload()
+					            	 
+					            	}
+					            },
+					            error:function(){
+					            	alert("网络错误,请售后再试....");
+					            }
+						});
+		    		}
+				}
+	
+	
+	</script>
+
+</body>
+</html>

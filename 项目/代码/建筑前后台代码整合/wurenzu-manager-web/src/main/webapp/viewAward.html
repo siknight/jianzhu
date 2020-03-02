@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>查看获奖作品信息</title>
+</head>
+<body>
+<div >
+<h3>查看获奖作品信息</h3>
+
+		<table id="content2" >
+				<tr>
+				    <td>序号</td>
+					<td>公司名</td>
+					<td>公司图片</td>
+					<td>作品名</td>
+					<td>作品图片</td>
+					<td>分数</td>
+					<td>详情</td>
+					
+				</tr>
+			</table>
+</div>
+
+<script type="text/javascript"
+		src="/manager/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/server.js"></script>
+
+<script>
+var tr_id=1;
+	$(function(){
+		webIntercepter();
+		console.info("我执行了");
+		findwork();
+	});
+	
+	
+	function webIntercepter(){
+			var manager_name=window.localStorage.getItem("name");
+			var token=window.localStorage.getItem("token");
+			if(manager_name==null||manager_name==""||token==null||token==""){
+				window.location.href="/login.html";
+				return;
+			}
+		}
+
+	//查询所有评委信息
+function findwork(){
+	
+	$.ajax({
+		   url:"/work/workid",
+            type:"get",
+            dataType:"json",
+            data:{},
+            success:function(result){
+            	
+            	if(result.code==0){
+            		var data=result.data;
+            		for(var i=0;i<data.length;i++){
+            		
+            		
+            			var str='';
+            			
+            			//str+='<tr > <td>'+tr_id+'<tr > <td>'+data[i].firmuser.firmName+'</td> <td>'+data[i].workname+'</td> <td>'+data[i].grade+'</td> <td>'+data[i].details+'</td> </tr>';
+            			str+='<tr > <td>'+tr_id+'</td> <td>'+data[i].firmuser.firmName+'</td> <td><img src="'+data[i].firmuser.image+'" style="width:80px; heigth:80px;" alt="图片"></td> <td>'+data[i].workname+'</td> <td><img src="'+data[i].imgUrl+'" style="width:80px; heigth:80px;" alt="图片"></td> <td>'+data[i].grade+'</td> <td>'+data[i].details+'</td> </tr>';
+            			tr_id+=1;
+            			$("#content2").append(str);
+            			
+            			
+            		    
+            		}
+            		
+            	}
+            	
+            },
+            error:function(){
+            	alert("网络错误，请稍后再试...");
+            }
+		
+	});
+	
+} 
+
+</script>
+</body>
+</html>

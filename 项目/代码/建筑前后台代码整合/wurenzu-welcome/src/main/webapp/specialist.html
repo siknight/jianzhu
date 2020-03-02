@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html ng-app="specialapp">
+	<head>
+		<meta charset="UTF-8">
+		
+		<link rel="stylesheet" type="text/css" media="all" href="css/specialist.css" /> 
+		<title>专家团队</title>
+		<style type="text/css">
+			*{
+				padding: 0;
+				margin: 0;
+			}
+		
+		</style>
+     <script src="js/angular.js" type="text/javascript" charset="UTF-8"></script>
+     <script src="js/jquery.min.js" type="text/javascript" charset="UTF-8"></script>
+     <script type="text/javascript">
+        //用于判断用户是否登录
+          $(function(){
+    	  verify();
+      });
+        
+        function verify(){
+        	var name =  window.localStorage.getItem("name");
+            if(name==""||name==null){
+            	alert("请登录后访问!");
+                window.location.href="welcome.html";
+            }
+        }
+        </script>
+	</head>
+	
+	<body ng-controller="spectl">
+		<!--<div class="div-3-dimension1"></div>-->
+		<!--顶部选项卡-->
+		<!--目前只是静态写死了，但是希望能够通过for循环将数据库里面的人遍历出来		
+		这样下面这么多重复的div只需要一个就好了。而且能够动态添加，数据库更新，下面的也会更新 -->
+		<!--  ng-style="{'background-image':'url('+ img.url +')'}" -->
+		
+		<div class="div-specialist-top-list"> 
+		    <div ng-repeat="m in specials track by $index" id="expert{{$index}}" ng-click="tiaozhuan($index)" class="div-specialist-top-list-character" ng-mouseover="architectOver($event)" 
+		    ng-mouseleave="architectLeave($event)"  ng-style="{'background': 'url('+m.image+')' , 'background-size':'100% 100%'}"><!-- specials是所有专家信息 -->
+		           <span >{{m.name}}</span>
+		    </div>
+			
+		</div>
+		<!--底部详细信息-->
+		<!--目前只是静态写死了，但是希望能够通过for循环将数据库里面的人遍历出来		
+		这样下面这么多重复的div只需要一个就好了。而且能够动态添加，数据库更新，下面的也会更新 -->
+		<!-- style="background: url({{m.image}});background-size: 100% 100%;" -->
+		
+		<div ng-repeat="m in specials track by $index" id="architect{{$index}}" class="div-my-first-characterBox">
+			<div class="div-characterBox-in-character-portrait"  ng-style="{'background':'url('+m.image+')' , 'background-size':'100% 100%' }"></div>
+		    <div class="div-characterBox-in-character-info">
+		    	<table>
+                       <tr style="height: 80px;">
+                          <td style="width: 150px; text-align: center;"><label>专家姓名：</label></td>
+                          <td><label name="itemname" id="firmname">{{m.name}}</label></td>
+                       </tr>
+                       
+                       <tr style="height: 60px;">
+                       <td style="width: 150px; text-align: center;"><label >性别：</label></td>
+                       <td><label name="gender" id="gender">{{m.sex}}</label></td>
+                       </tr>
+                       
+                       <tr style="height: 80px;">
+                       <td  style="width: 150px; text-align: center;"><label>座右铭：</label></td>
+                       <td><label name="motto" id="motto">{{m.signature}}</label></td>                      
+                       </tr>
+                       
+                       <tr style="height: 150px;">    	
+                       <td style="width: 150px; text-align: center;"><label >关于专家：</label></td>
+                       <td><label name="info" id="info">{{m.details}}</label></td>
+                       </tr>
+                      
+		    	</table>
+		    </div>
+		</div>
+			<script type="text/javascript" src="js/server.js" charset="UTF-8"></script>
+		 <script src="js/zhuanjia.js" type="text/javascript" charset="UTF-8"></script>
+	</body>
+	
+</html>

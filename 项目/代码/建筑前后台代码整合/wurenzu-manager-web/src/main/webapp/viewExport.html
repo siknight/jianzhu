@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h3>查看评委信息</h3>
+
+		<table id="content2">
+				<tr>
+					<td>id</td>
+					<td>用户名</td>
+					<td>性别</td>
+					<td>手机号</td>
+					<td>邮箱</td>
+					<td>头像</td>
+					<td>描述</td>
+					
+				</tr>
+			</table>
+
+
+<script type="text/javascript"
+		src="/manager/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/server.js"></script>
+
+<script>
+var tr_id=1;
+	$(function(){
+		webIntercepter();
+		console.info("我执行了");
+		selectExportByroleId();
+	});
+	
+	
+	function webIntercepter(){
+			var manager_name=window.localStorage.getItem("name");
+			var token=window.localStorage.getItem("token");
+			if(manager_name==null||manager_name==""||token==null||token==""){
+				window.location.href="/login.html";
+				return;
+			}
+		}
+
+
+	//查询所有评委信息
+function selectExportByroleId(){
+	
+	$.ajax({
+		   url:"/manager/roleid",
+            type:"get",
+            dataType:"json",
+            data:{},
+            success:function(result){
+            	
+            	if(result.code==0){
+            		var data=result.data;
+            		for(var i=0;i<data.length;i++){
+            		
+            		
+            			var str='';
+            			
+            			str+='<tr > <td>'+tr_id+'</td> <td>'+data[i].name+'</td> <td>'+data[i].sex+'</td><td>'+data[i].phone+'</td> <td>'+data[i].email+'</td> <td><img src="'+data[i].image+'"  style="width:50px;heigth:50px;" alt="图片"></td> <td>'+data[i].details+'</td> </tr>';
+            			tr_id+=1;
+            			$("#content2").append(str);
+            			
+            			
+            		    
+            		}
+            		
+            	}
+            	
+            },
+            error:function(){
+            	alert("网络错误，请稍后再试...");
+            }
+		
+	});
+	
+} 
+
+</script>
+</body>
+</html>

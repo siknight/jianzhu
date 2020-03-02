@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+ <div>
+ 	<div>
+			<h3>已经添加的评委</h3>
+			
+			<table id="content2">
+				<tr>
+					<td>id</td>
+					<td>用户名</td>
+					<td>性别</td>
+					<td>手机号</td>
+					<td>邮箱</td>
+					<td>头像</td>
+					<td>描述</td>
+					<td>操作</td>
+				</tr>
+			</table>
+			<h2 id="updateinfo03" style="color: red;"></h2>
+			<h2 id="updateinfo04" style="color: green;"></h2>
+		</div>
+		
+		<div >
+			<h3>修改评委</h3>
+			用户名：<input id="username" type="text" value="" placeholder="请输入用户名"><br />
+			性别：男<input id="man" name="sex" type="radio" value="男" checked="checked" />
+				 女<input id="woman" name="sex" type="radio" value="女" /><br> 
+			密码：<input id="password" type="password" value="" placeholder="请输入要修改密码"><br />
+		          确认密码：<input id="password2" type="password" value="" placeholder="请确认要修改密码"><br />
+			手机号：<input id="phone" type="text" value="" placeholder="请输入手机号"><br />
+		             邮箱 ：<input id="email" type="text" value="" placeholder="请输入邮箱"><br />
+			评委描述：<br />
+			<textarea id="userdetails" rows="5" cols="50"></textarea>
+
+			<h2 id="updateinfo01" style="color: red;"></h2>
+			<h2 id="updateinfo02" style="color: green;"></h2>
+			<button id="update">修改</button>
+		</div>
+ </div>
+ <script type="text/javascript"
+		src="/manager/lib/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/server.js"></script>
+	
+	<script>
+	
+	   var exportid="";
+   
+   		var tr_id=1;
+   		$(function(){
+   			webIntercepter();
+   			selectExportByroleId();
+   		});
+   		
+   		
+   		function webIntercepter(){
+   			var manager_name=window.localStorage.getItem("name");
+   			var token=window.localStorage.getItem("token");
+   			if(manager_name==null||manager_name==""||token==null||token==""){
+   				window.location.href="/login.html";
+   				return;
+   			}
+   		}
+   
+   		//查询所有评委信息
+    	function selectExportByroleId(){
+    		
+    		$.ajax({
+    			   url:"/manager/roleid",
+		            type:"get",
+		            dataType:"json",
+		            dat:{},
+		            success:function(result){
+		            	
+		            	if(result.code==0){
+		            		var data=result.data;
+		            		for(var i=0;i<data.length;i++){
+		            		
+		            		
+		            			var str='';
+		            			
+		            			str+='<tr id="'+data[i].id+'"> <td>'+tr_id+'</td> <td id="name">'+data[i].name+'</td> <td id="sex">'+data[i].sex+'</td><td id="sex">'+data[i].phone+'</td><td id="sex">'+data[i].email+'</td><td><img img src="'+data[i].image+'"  style="width:50px;heigth:50px;" alt="图片"></td> <td id="details">'+data[i].details+'</td> <td><button  onclick="updateById(this,\''+data[i].id+'\')">修改</button></td> </tr>';
+		            			tr_id+=1;
+		            			$("#content2").append(str);
+		            			
+		            			
+		            		    
+		            		}
+		            		
+		            	}
+		            	
+		            },
+		            error:function(){
+		            	alert("网络错误，请稍后再试...");
+		            }
+    			
+    		});
+    		
+    	} 
+   		
+   		//table 行后面的修改
+   		function updateById(_this,id){
+   			$("#updateinfo01").html("");
+			 $("#updateinfo02").html("");
+			 $("#updateinfo03").html("");
+			 $("#updateinfo04").html("");
+			 var name='';
+			 var sex='';
+			 var details='';
+			 var phone='';
+			 var email='';
+			 var img='';
+			 exportid=id;
+			
+  			 $(_this).parent().parent().children('td').each(function(j){  // 遍历 tr 的各个 td
+		          
+  			 	  if(j==1){
+  			 		name=$(this).text()
+  			 	  }else if(j==2){
+  			 		sex=$(this).text();  
+  			 	  }else if(j==3){
+  			 		  phone=$(this).text();
+  			 	  }else if(j==4){
+  			 		  email=$(this).text();
+  			 	  }else  if(j==6){
+  			 		  details=$(this).text();  
+  			 	  }
+  			 	 
+             });
+  			 
+  			
+  			 //赋值操作
+  			 
+  			 $("#username").attr('value',name);
+  			 
+  			 if(sex=='男'){
+         		$("#man").attr("checked","checked");
+         	}else if(sex=="女"){
+         		$("#woman").attr("checked","checked");
+         	}
+  			// $("#touxiang").attr("value",img);
+  			 //$("#touxiang").val(img);
+  			 $("#phone").attr('value',phone);
+  			 $("#email").attr('value',email);
+  			 $("#userdetails").val(details);
+  			
+  			
+  			 
+   		}
+   		
+   		//修改
+   		
+		$("#update").click(function(){
+			$("#updateinfo01").html("");
+			 $("#updateinfo02").html("");
+			 $("#updateinfo03").html("");
+			 $("#updateinfo04").html("");
+			if(confirm("确定修改吗？")){
+				var username =$("#username").val();
+				var sex =$('input[name="sex"]:checked').val();
+				var password =$("#password").val();
+				var password2 =$("#password2").val();
+				var userdetails=$("#userdetails").val();
+				var phone=$("#phone").val();
+				var email=$("#email").val();
+				if(username==""){
+					 $("#updateinfo01").html("用户名为空,请重新输入");
+					 return;
+				}
+				if(password==""){
+					 $("#updateinfo01").html("密码为空,请重新输入");
+					 return ;
+				}
+				if(password2==""){
+					 $("#updateinfo01").html("确认密码为空,请重新输入");
+					 return ;
+				}
+				if(details==""){
+					 $("#updateinfo01").html("描述为空,请重新输入");
+					 return ;
+				}
+				
+				if(phone==""){
+					 $("#updateinfo01").html("手机号为空,请重新输入");
+					 return ;
+				}
+				if(email==""){
+					 $("#updateinfo01").html("邮箱为空,请重新输入");
+					 return ;
+				}
+				
+				
+				if(password!=password2){
+					 $("#updateinfo01").html("两次新密码输入不一样,修改失败,请重新输入");
+					 return;
+				}
+				
+				
+				$.ajax({
+					    url:"/manager/exportupdate",
+			            type:"put",
+			            dataType:"json",
+			            data:{"name":username,"sex":sex,"password":password,"details":userdetails,"phone":phone,"email":email,"id":exportid},
+			            success:function (result) {
+			            	if(result.code==0){
+				      	        $("#updateinfo02").html("恭喜你,修改成功");
+				      	      $("#"+exportid).children('td').each(function(j){  // 遍历 tr 的各个 td
+						          
+				  			 	  if(j==1){
+				  			 		 $(this).text(username);
+				  			 	  }else if(j==2){
+				  			 		$(this).text(sex);  
+				  			 	  }else if(j==3){
+				  			 		$(this).text(phone); 
+				  			 	  }else if(j==4){
+				  			 		$(this).text(email); 
+				  			 	  }else  if(j==6){
+				  			 		 $(this).text(userdetails);  
+				  			 	  }
+				  			 	 
+				             });
+			            	}
+			            
+			            },
+			            error:function(){
+			            	alert("网络错误");
+			            }
+					
+				});
+				
+			}
+			
+		});
+	
+    	</script>
+</body>
+</html>

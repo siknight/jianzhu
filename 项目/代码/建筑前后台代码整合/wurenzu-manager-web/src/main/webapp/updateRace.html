@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	 <div>
+			<h3>修改正在进行的比赛</h3>
+			
+			<table id="content2">
+				<tr>
+					<td>id</td>
+					<td>比赛名</td>
+					<td>期数</td>
+					<td>海报</td>
+					<td>比赛描述</td>
+					<td>操作</td>
+				</tr>
+			</table>
+			<h2 id="updateinfo03" style="color: red;"></h2>
+			<h2 id="updateinfo04" style="color: green;"></h2>
+		</div>
+		
+		
+		<div>
+		 <h3>要修改比赛的信息</h3>
+			比赛名：<input id="raceName" type="text" value="" placeholder="请输入要修改的比赛名"><br /><br />
+			比赛期数：第<input id="period" type="text" value="" placeholder="请输入要修改的期数">期    <span style="color:red">(请填入阿拉伯数字)</span>  <br /><br />
+			比赛描述：<br />
+			<textarea id="details" rows="5" cols="50"></textarea>
+
+			<h2 id="updateinfo01" style="color: red;"></h2>
+			<h2 id="updateinfo02" style="color: green;"></h2>
+			<button id="update">修改</button>
+		</div>
+		<script type="text/javascript"
+		src="/manager/lib/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/server.js"></script>
+	
+		<script>
+		
+		    var  updateid="" ;
+			$(function(){
+				webIntercepter();
+				selectRaceByStatus();
+			});
+			
+			
+			function webIntercepter(){
+	   			var manager_name=window.localStorage.getItem("name");
+	   			var token=window.localStorage.getItem("token");
+	   			if(manager_name==null||manager_name==""||token==null||token==""){
+	   				window.location.href="/login.html";
+	   				return;
+	   			}
+	   		}
+			//查询已经发布的正在进行的比赛
+			function selectRaceByStatus(){
+				
+				$.ajax({
+					    url:"/manager/race/status",
+			            type:"get",
+			            dataType:"json",
+			            data:{"status":1},
+			            success:function(result){
+			            	console.info("result.code=="+result.code);
+			            	if(result.code==0){
+			            		var data=result.data;
+			            		if(data==""){
+			            			return;
+			            		}
+			            		
+			            			flag=true;
+			            			console.info("1:"+flag);
+			            			var str='';
+			            			
+			            			str+='<tr id="tr_id"> <td>1</td> <td>'+data.raceName+'</td> <td>第'+data.period+'期</td><td><img src="'+data.imgUrl+'"  style="width:50px;heigth:50px;" alt="图片"></td> <td>'+data.details+'</td> <td><button onclick="updateById(this,'+data.id+')">修改</button></td> </tr>';
+			            			
+			            			$("#content2").append(str);
+			            			
+			            			
+			            		    
+			            		
+			            		
+			            	}
+			            	
+			            },
+			            error:function(){
+			            	alert("网络错误，请稍后再试...");
+			            }
+					
+				});
+				
+			} 
+				
+				//table 修改
+			function updateById(_this,id){
+				$("#updateinfo01").html("");
+				 $("#updateinfo02").html("");
+				 $("#updateinfo03").html("");
+				 $("#updateinfo04").html("");
+				 var raceName='';
+				 var period='';
+				 var details='';
+				 
+				 updateid=id;
+				
+	  			 $(_this).parent().parent().children('td').each(function(j){  // 遍历 tr 的各个 td
+			          
+	  			 	  if(j==1){
+	  			 		raceName=$(this).text()
+	  			 	  }else if(j==2){
+	  			 		var str=$(this).text();
+	  			 		period=str.substring(!str.indexOf('第'),str.indexOf('期'));
+	  			 	  }else  if(j==4){
+	  			 		  details=$(this).text();  
+	  			 	  }
+	  			 	 
+	             });
+	  			 
+	  			 
+	  			
+	  			 console.info("raceName="+raceName);
+	  			 console.info("period="+period);
+	  			 console.info("details="+details);
+	  			 
+	  			 //赋值操作
+	  			 
+	  			 $("#raceName").attr('value',raceName);
+	  			 
+	  			$("#period").attr('value',period);
+	  			 
+	  			 $("#details").val(details);
+	  			
+	  			 
+			}
+				
+				
+				
+			//点击修改
+	   		
+			$("#update").click(function(){
+				 $("#updateinfo01").html("");
+				 $("#updateinfo02").html("");
+				 $("#updateinfo03").html("");
+				 $("#updateinfo04").html("");
+				
+	   			var raceName =$("#raceName").val();
+				
+				var period=$("#period").val();
+				var details=$("#details").val();
+				
+				if(raceName==""){
+					 $("#updateinfo01").html("比赛名为空,请重新输入");
+					 return;
+				}
+				
+				if(period==""){
+					 $("#updateinfo01").html("期数为空,请重新输入");
+					 return ;
+				}
+				if(details==""){
+					 $("#updateinfo01").html("比赛描述为空,请重新输入");
+					 return ;
+				}
+				if(isNaN(period)){
+					 $("#updateinfo01").html("期数输入的不是阿拉伯数字,请重新输入");
+					 return ;
+				}
+				
+				$.ajax({
+				    url:"/manager/raceupdate/id",
+		            type:"put",
+		            dataType:"json",
+		            data:{"raceName":raceName,"details":details,"period":period,"id":updateid},
+		            success:function(result){
+		            	
+		            	if(result.code==0){
+		            		 $("#updateinfo02").html("恭喜你,修改成功");
+		            		
+		            		 $("#tr_id").children('td').each(function(j){  // 遍历 tr 的各个 td
+						          
+				  			 	  if(j==1){
+				  			 		 $(this).text(raceName);
+				  			 	  }else if(j==2){
+				  			 		$(this).text("第"+period+"期");  
+				  			 	  }else  if(j==4){
+				  			 		 $(this).text(details);  
+				  			 	  }
+				  			 	 
+				             });
+		            	}
+		            },
+		            error:function(){
+		            	alert("网络错误,请售后再试....");
+		            }
+			});
+					
+				
+				
+			});
+		
+		</script>
+
+</body>
+</html>

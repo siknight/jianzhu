@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>上海建筑行业协会大型建筑奖项参评</title>
+<script type="text/javascript" src="js/jquery.min.js" charset="UTF-8"></script> 
+<script type="text/javascript" src="js/layer/layer.js"  charset="UTF-8"></script>
+<style type="text/css">
+	*{
+		position: absolute;
+		margin: 0;
+		padding: 0;
+		background-color: black;
+		
+	}
+</style>
+		
+<link rel="stylesheet" type="text/css" media="all" href="css/mystyle.css" /> 
+	<!--******************************************************-->
+
+<script>
+	/*↓↓↓↓↓↓↓轮播效果↓↓↓↓↓↓↓*/
+	window.onload=function(){
+		var lik=document.getElementsByTagName('li');
+		var h=document.getElementsByName('words')
+			
+		function fun(i,j){
+			lik[i].style.opacity=1;
+			lik[j].style.opacity=0;
+			
+			h[i].style.opacity=1;
+			h[j].style.opacity=0;
+		}
+			
+		fun(0,1);
+		var i=0;
+			
+		setInterval(function(){
+			if(++i>=3){
+				i=0;
+				fun(0,2);
+			}
+			else
+			fun(i,i-1);
+		},3000);
+	}
+	/*↑↑↑↑↑↑↑轮播效果↑↑↑↑↑↑↑*/
+	/****onmouse效果****/
+	function bgIn(a){
+		a.style.backgroundColor="#A3A3A3";
+		var extend=document.getElementById("bottom-extend");
+		extend.style.visibility="hidden";
+		var price=document.getElementById("price");
+		price.style.background="none";
+	}
+	function bgIn1(a){
+		a.style.backgroundColor="#A3A3A3";
+//		a.style.opacity=0.6;
+		var extend=document.getElementById("bottom-extend");
+		extend.style.visibility="visible";
+	}
+	function bgOut(a){
+		a.style.background="none";
+	}
+	function bgOut1(){
+		var price=document.getElementById("price");
+		price.style.background="none";
+		var extend=document.getElementById("bottom-extend");
+		extend.style.visibility="hidden";
+		
+		
+	}
+	
+	
+	/*文本框变色*/
+	function textOnMouseOver(a){
+		a.style.backgroundColor="grey";
+		
+	}
+	function textOnMouseOut(a){
+		a.style.backgroundColor="black";
+		a.style.background.opacity=0.2;
+		
+	}
+	/*注册按钮变色*/
+	function textOnMouseOut1(a){
+		a.style.backgroundColor="red";
+		a.style.background.opacity=0.7;
+		
+	}
+    /****onmouse效果****/
+   /*返回主页*/
+  function backThem(){
+  	var box=document.getElementById("box");
+  	box.style.visibility="visible";
+  	
+//	var registerBox=document.getElementById("registerBox");
+//	registerBox.style.visibility="hidden";
+  	
+  	var publicity=document.getElementById("publicity");
+  	publicity.style.visibility="visible";
+  	
+  	var bottom=document.getElementById("bottom");
+  	bottom.style.opacity=0.8;
+  	/*注册阴影消失*/
+	var registerBox=document.getElementById("register");
+    registerBox.style.zIndex=0;
+    /*注册表格消失*/
+    var registerTableOut=document.getElementById("registerTableOut");
+    registerTableOut.style.zIndex=0;
+    /*登录阴影消失*/
+	var loginBox=document.getElementById("login");
+    loginBox.style.zIndex=0;
+    /*登录表格消失*/
+    var loginTableOut=document.getElementById("loginTableOut");
+    loginTableOut.style.zIndex=0;
+  }
+  /*onclick-登录*/
+ function login(){
+ 	var publicity=document.getElementById("publicity");
+  	publicity.style.visibility="hidden";
+  	/*注册阴影消失*/
+	var registerBox=document.getElementById("register");
+    registerBox.style.zIndex=0;
+    /*注册表格消失*/
+    var registerTableOut=document.getElementById("registerTableOut");
+    registerTableOut.style.zIndex=0;
+  	
+  	/*阴影显现*/
+  	var loginBox=document.getElementById("login");
+    loginBox.style.zIndex=2;
+    var x=0;
+		setInterval(function(){
+			if(x<=0.7){
+				loginBox.style.opacity=x;
+				x=x+0.005;
+			}
+		},5);
+	/*表格显现*/
+	var loginTableOut=document.getElementById("loginTableOut");
+    loginTableOut.style.zIndex=3;
+ 
+  	/*bottom渐褪色*/
+	var bottom=document.getElementById("bottom");
+	var i=0.6;
+		setInterval(function(){
+			if(i>=0){
+				bottom.style.opacity=i;
+				i=i-0.05;
+			}
+		},100);
+  	
+ }
+   
+   /*onclick-注册*/
+  function register(){
+  	var publicity=document.getElementById("publicity");
+  	publicity.style.visibility="hidden";
+  	
+  	/*登录阴影消失*/
+	var loginBox=document.getElementById("login");
+    loginBox.style.zIndex=0;
+    /*登录表格消失*/
+    var loginTableOut=document.getElementById("loginTableOut");
+    loginTableOut.style.zIndex=0;
+//	var box=document.getElementById("box");
+//	box.style.visibility="hidden";
+  	
+  	/*阴影显现*/
+  	var registerBox=document.getElementById("register");
+//	registerBox.style.visibility="visible";
+    registerBox.style.zIndex=2;
+    var x=0;
+		setInterval(function(){
+			if(x<=0.7){
+				registerBox.style.opacity=x;
+				x=x+0.005;
+			}
+		},5);
+	/*表格显现*/
+	var registerTableOut=document.getElementById("registerTableOut");
+    registerTableOut.style.zIndex=3;
+//	var y=0;
+//		setInterval(function(){
+//			if(y<=0.7){
+//				registerBox.style.opacity=y;
+//				y=y+0.005;
+//			}
+//		},5);
+  	
+
+  	
+  	/*bottom渐褪色*/
+	var bottom=document.getElementById("bottom");
+	var i=0.6;
+		setInterval(function(){
+			if(i>=0){
+				bottom.style.opacity=i;
+				i=i-0.05;
+			}
+		},100);
+  	
+  
+  }
+
+</script>
+</head>
+	
+
+<body >
+	<!--最外层box-->
+	<div class="box" id="box">
+		<ul>
+			<li><img src="images/bg1.jpeg" style="position: fixed;" width="100%" height="100%" alt=""/></li>
+			<li><img src="images/bg2.png" style="position: fixed;" width="100%" height="100%" alt=""/></li>
+			<li><img src="images/bg3.jpg" style="position: fixed;" width="100%" height="100%" alt=""/></li>
+		</ul>
+	</div>
+	
+	  	
+	  	
+	<!--登录box-->
+	<!--阴影-->
+	  <div  id="login" class="div-login"></div>
+	  <!--登录表格-->
+	  <div  id="loginTableOut" class="div-login-tableOut">	
+				<form novalidate>
+					<div class="div-login-table-row1">
+						<label  >用户名 ：</label>
+                        <input type="text" name="username" id="username" onmouseover="textOnMouseOver(this)" onmouseleave="textOnMouseOut(this)" placeholder="请输入用户名" required >
+					</div>
+					<div class="div-login-table-row2">
+						<label >密  码 ：</label>
+                        <input type="text" name="password1" id="password1" onmouseover="textOnMouseOver(this)" onmouseleave="textOnMouseOut(this)" placeholder="请输入密码" required >
+					</div>
+					<div class="div-login-table-row3">
+                    <input  onmouseover="textOnMouseOver(this)" onmouseleave="textOnMouseOut1(this)" onclick="loginSubmit()"  type="button" style="cursor:pointer" value="登录">
+                    </div>
+				</form>
+	  </div>
+    <!--注册box-->
+	  <!--阴影-->
+	  <div  id="register" class="div-register"></div>
+	  <!--注册表格-->
+	  <div  id="registerTableOut" class="div-register-tableOut">	
+				<form novalidate>
+					
+					<div class="div-register-table-row1">
+						<label  >用户名<a>*</a> ：</label>
+                        <input type="text" name="username" id="username2" onmouseover="textOnMouseOver(this)" onmouseleave="textOnMouseOut(this)" placeholder="请输入用户名" required >
+					</div>
+					<div class="div-register-table-row2">
+						<label >密  码<a>*</a> ：</label>
+                        <input type="text" name="password1" id="password3" onmouseover="textOnMouseOver(this)" onmouseleave="textOnMouseOut(this)" placeholder="请输入密码" required >
+					</div>
+					<div class="div-register-table-row3">
+						<label >确认密码<a>*</a> ：</label>
+                        <input type="text" name="password2" id="password4" onmouseover="textOnMouseOver(this)" onmouseleave="textOnMouseOut(this)" placeholder="请再次输入用户名" required >
+					</div>
+					
+					<div class="div-register-table-row7">
+                    <input onmouseover="textOnMouseOver(this)" onmouseleave="textOnMouseOut1(this)" onclick="registerSubmit()"   type="button"  style="cursor:pointer" value="注册">
+                    </div>
+				</form>
+	  </div>
+	
+	<!--宣传字-->
+	<div  id="publicity" class="div-words">
+			<h1 name="words"style="position: fixed;" width="100%" height="100%">上海建筑行业协会<br />
+			    建筑奖项参评
+			</h1>
+			<h1 name="words"style="position: fixed;" width="100%" height="100%">&nbsp;&nbsp;权威专家评审<br />
+			 &nbsp;&nbsp;全民投票参与
+			</h1>
+			<h1 name="words"style="position: fixed;" width="100%" height="100%">&nbsp;&nbsp;特色建筑设计<br />
+			 &nbsp;&nbsp;贯彻党的领导
+			</h1>
+	</div>
+	
+	<!--上下阴影导航栏-->
+	<!--上-->
+	<div class="div-bar1">
+		<!--上左-->
+	    <div class="div-bar1-container2" >
+	    	<!--上左1-->
+	    	<div id="rbg1" class="div-bar1-container2-list1" onmouseover="bgIn(this)" onmouseleave="bgOut(this)"> 
+	    		<a href="#" style="left: 10%;" onmouseover="this.style.color='black'" onmouseleave="this.style.color='white'" onclick="backThem()">&nbsp;首页</a>
+	    	</div>
+	    	<!--上左2-->
+	    	<div id="entries" class="div-bar1-container2-list2" onmouseover="bgIn(this)" onmouseleave="bgOut(this)">
+	    		<a href="lookthrough.html" style="left: 10%;" onmouseover="this.style.color='black'" onmouseleave="this.style.color='white'">参赛作品</a>
+	    	</div>
+	    	<!--上左3-->
+	    	<div id="special" class="div-bar1-container2-list3" onmouseover="bgIn(this)" onmouseleave="bgOut(this)">
+	    		<a href="specialist.html" style="left: 10%;" onmouseover="this.style.color='black'" onmouseleave="this.style.color='white'">专家团队</a>
+	    	</div>
+	    	<!--上左4-->
+	    	<div id="price" class="div-bar1-container2-list4" onmouseover="bgIn1(this)" >
+	    		<a href="PrizeShow.html" style="left: 10%;" onmouseover="this.style.color='black'" onmouseleave="this.style.color='white'">获奖展示</a>
+	    	</div>
+	    	<!--上左5-->
+	    	<div id="canjia" class="div-bar1-container2-list5" onmouseover="bgIn(this)" onmouseleave="bgOut(this)">
+	    		<a  href="BaoMing.html" style="left: 10%;" onmouseover="this.style.color='black'" onmouseleave="this.style.color='white'">参加报名</a>
+	    	</div>
+	    	
+		
+	    </div>
+		<!--上右(登录前)-->
+		<div id="LoginBefore" class="div-bar1-container1">
+			<a href="#" style="left: 20%;" onmouseover="this.style.color='#00FF00'" onmouseleave="this.style.color='white'" onclick="login()">登录</a>
+			<a href="#" style="left: 35%;" onmouseover="this.style.color='#00FF00'" onmouseleave="this.style.color='white'" onclick="register()">注册</a>
+			<span id="s1" style="left: 49%;">|</span>
+			<a id="pers1" href="InfoCenter.html" style="left: 52%;" onmouseover="this.style.color='#00FF00'" onmouseleave="this.style.color='white'">个人中心</a>
+		</div>
+		<!--上右(登录后)-->
+		<div id="LoginAfter" class="div-bar1-container6">
+			<span id ="name" href="#" style="color:yellow;left: 12%">用户名</span>
+			<a href="#" style="left: 35%; " onmouseover="this.style.color='#00FF00'" onmouseleave="this.style.color='white'" onclick="loginout()">注销</a>
+			<span style="left: 49%;">|</span>
+			<a id="pers2" href="InfoCenter.html" style="left: 52%;" onmouseover="this.style.color='#00FF00'" onmouseleave="this.style.color='white'">个人中心</a>
+		</div>
+	</div>
+	
+	<div id="bottom-extend" class="div-bar1-bottom-price-extend" onmouseleave="bgOut1()">
+		<!--文化类，陈列类，健康类，别墅类，住房类，宗教类，学校类，购物类，运动类，运输类，办公类 -->
+		<a href="#" style="left: 22%;" onmouseover="this.style.color='#9AFF9A'" onmouseleave="this.style.color='black'">文化类</a>
+		<a href="#" style="left: 27%;" onmouseover="this.style.color='#9AFF9A'" onmouseleave="this.style.color='black'">陈列类</a>
+		<a href="#" style="left: 32%;" onmouseover="this.style.color='#9AFF9A'" onmouseleave="this.style.color='black'">住房类</a>
+		<a href="#" style="left: 37%;" onmouseover="this.style.color='#9AFF9A'" onmouseleave="this.style.color='black'">宗教类</a>
+		<a href="#" style="left: 42%;" onmouseover="this.style.color='#9AFF9A'" onmouseleave="this.style.color='black'">购物类</a>
+		<a href="#" style="left: 47%;" onmouseover="this.style.color='#9AFF9A'" onmouseleave="this.style.color='black'">办公类</a>
+	</div>
+	
+	<!--下-->
+	<div id="bottom" class="div-bottom1">
+		<div id="bottom-left" class="div-bottom2-container">
+			<a style="top: 30%;left: 5%;" href="platformInfo.html" onmouseover="this.style.color='#00FF00'" onmouseleave="this.style.color='white'">
+				协会文化---最具国际权威性的参评平台
+			</a>
+			<a style="top: 50%;left: 5%; color: #ABABAB;">
+				&nbsp;&nbsp;匠心筑精品，奋斗铸幸福。
+			</a>
+			<a style="top: 70%;left: 5%;color: #ABABAB;">
+				&nbsp;&nbsp;秉承绿色建筑，建筑空间日记，空间城市记忆。
+			</a>
+			
+		</div>
+		
+		<div id="bottom-right" class="div-bottom1-container">
+			<a style="top: 30%;left: 20%;">
+				咨询热线
+			</a>
+			<a style="top: 60%;left: 20%;">
+				156-9225-6953
+			</a>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/server.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="js/login.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="js/register.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="js/loginout.js" charset="UTF-8"></script>
+	<script type="text/javascript" charset="UTF-8">
+	   var name =  window.localStorage.getItem("name");
+	   var LoginBefore=document.getElementById("LoginBefore");
+	   var LoginAfter=document.getElementById("LoginAfter");
+	   
+	   var pers1=document.getElementById("pers1");
+	   var s1=document.getElementById("s1");
+	   var canjia=document.getElementById("canjia");
+	   
+	   if(name=="null"){
+		   LoginBefore.style.visibility="visible";
+			  LoginAfter.style.visibility="hidden";
+			 // alert("用户还没有登录");
+			//个人中心隐藏
+			pers1.style.visibility="hidden";
+			s1.style.visibility="hidden";
+			//参加报名不可用
+			canjia.style.visibility="hidden";
+			
+			//只有登录和注册可以用，其他都让链接失效
+			 var entries=document.getElementById("entries").getElementsByTagName('A');
+			 entries[0].onclick = function(){
+				 alert("请登录后点击");
+				 return false;};
+			 entries[0].href = "#";
+			 //提示登陆后点击
+			 
+			
+			 
+			 var special=document.getElementById("special").getElementsByTagName('A');
+			 special[0].onclick = function(){
+				 alert("请登录后点击");
+				 return false;};
+			 special[0].href = "#";
+			 
+			 var price=document.getElementById("price").getElementsByTagName('A');
+			 price[0].onclick = function(){
+				 alert("请登录后点击");
+				 return false;};
+			 price[0].href = "#";
+			 
+			 var canjia=document.getElementById("canjia").getElementsByTagName('A');
+			 canjia[0].onclick = function(){
+				 alert("请登录后点击");
+				 return false;};
+			 canjia[0].href = "#";
+			
+			 /**
+			var LoginBefore=document.getElementById("canjia").getElementsByTagName('A');
+			 LoginBefore[2].onclick = function(){
+				 alert("请登录后点击");
+				 return false;};
+			 LoginBefore[2].href = "#";
+			
+			 
+			 var LoginAfter=document.getElementById("canjia").getElementsByTagName('A');
+			 LoginAfter[1].onclick = function(){
+				 alert("请登录后点击");
+				 return false;};
+			 LoginAfter[1].href = "#";
+			**/
+			 
+			
+	   }
+	   if(name!="null"){
+		   LoginBefore.style.visibility="hidden";
+			  LoginAfter.style.visibility="visible";
+			  $("#name").text(name);
+			 // alert(name+"用户登录过了");
+			 
+			 //个人中心能看见
+			 pers1.style.visibility="visible";
+			s1.style.visibility="visible";
+			 //参加报名可用
+			canjia.style.visibility="visible";
+			 
+			 
+			 
+	   }
+	  
+	</script>
+</body>
+	
+</html>

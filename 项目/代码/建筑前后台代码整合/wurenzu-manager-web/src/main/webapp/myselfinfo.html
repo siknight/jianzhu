@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+	*{
+		margin: 0;
+		padding: 0;
+	}
+	.div-per-box{
+		position: absolute;
+		margin: 0;
+		padding: 0;
+		background-image: url(images/perInfo.png);
+		background-size: 100% 100%;
+		width: 100%;
+		height: 100%;
+	}
+	.div-per-left-on{
+		position: fixed;
+		width: 100%;
+		height: 200px;
+		/*background: none;*/
+	    left: 0;
+	    top: 0;
+		background: -webkit-linear-gradient(
+		top,#87CEFF,#8DEEEE,#98F5FF,#BBFFFF,#E0FFFF,#F0FFFF
+		);
+		opacity: 0.6;
+		visibility: visible;
+	}
+	
+	.div-per-left-down{
+		position: fixed;
+		width: 100%;
+		height: 200px;
+		background: none;
+	    left: 0;
+	    bottom: 0;
+		/*background: -webkit-linear-gradient(
+		top,#F0FFFF,#E0FFFF,#BBFFFF,#98F5FF,#8DEEEE,#87CEFF
+		);*/
+		opacity: 0.6;
+		visibility: visible;
+	}
+	.div-per-left{
+		position: fixed;
+		top: 20%;
+		width: 30%;
+		height: 360px;
+		margin-left: 10%;
+		background: none;
+		/*background: rgba(255,0,0,0.25);*/
+	}
+	.div-per-left p{
+		font-family:"微软雅黑";
+		color: black;
+		font-size: large;
+		font-weight:bold;
+		background: none;
+
+	}
+	.div-per-left label{
+		font-family:"微软雅黑";
+		color: darkmagenta;
+		font-size: large;
+		font-weight:bold;
+		background: none;
+
+	}
+	.div-item{
+		padding-top: 25px;
+		padding-left: 10px;
+		height: 10%;
+		width: 80%;
+		background: none;
+	}
+</style>
+<script type="text/javascript" src="/manager/lib/jquery/1.9.1/jquery.min.js"></script> 
+	</head>	
+
+<body>
+	<div class="div-per-box">
+		<div class="div-per-left-on"></div>
+		<div class="div-per-left">
+		
+			<div class="div-item"><p>头像：<br> &nbsp; <label id="touxiang">&nbsp;&nbsp;</label></p></div><br>
+            <div class="div-item"><p>用户名：<label id="name">&nbsp;&nbsp;</label></p></div>
+            <div class="div-item"><p>爱   名:<label  id="nick_name">&nbsp;&nbsp;</label></p></div>
+            <div class="div-item"><p>性   别：<label  id="sex">&nbsp;&nbsp;</label></p></div>
+            <div class="div-item"><p>手机号:<label  id="phone">&nbsp;&nbsp;</label></p></div>
+            <div class="div-item"><p>邮 箱：<label  id="email">&nbsp;&nbsp;</label></p></div>
+            <div class="div-item"><p>个性签名：<label  id="signature">&nbsp;&nbsp;</label></p></div>
+          
+		</div>
+		<div class="div-per-left-down"></div>
+	</div>
+	<script src="/js/myselfinfo.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: com.run
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: A
+Implementation-Vendor-Id: com.liurenzu
+Build-Jdk: 1.8.0_191
+Implementation-URL: http://projects.spring.io/spring-boot/com.run/
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
+

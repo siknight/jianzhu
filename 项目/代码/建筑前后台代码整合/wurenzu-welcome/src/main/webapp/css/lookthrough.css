@@ -1,0 +1,62 @@
+.div-look-left{
+	z-index: 2;
+	position: fixed;
+	top: 0;
+	width: 180px;
+	height: 100%;
+	background: rgba(0,0,0,0.6);
+	overflow-x:auto;
+}
+.div-look-left-item{
+	z-index: 2;
+	height: 130px;
+	width: 160px;
+	float: left;
+	margin-left: 5px;
+	margin-top: 10px;
+	background: green;
+    opacity: 1;
+    cursor: pointer;  
+}
+.div-look-bg{
+	z-index: 1;
+	height: 100vh;
+	width: 100%;
+	background-color: #008000;
+	
+	display: table;
+	
+}
+.div-look-bg h1{
+	font-family: "arial black";
+	font-size: 50px;
+	color: white;
+	/*margin: 0;*/
+	/*top: 0;*/
+	/*right: 0;*/
+	text-align: right;
+	/*display: table-cell;*/
+	/*vertical-align: middle;*/
+}
+.div-look-bg h2{
+	font-family: "arial black";
+	font-size: 30px;
+	color: white;
+	margin-top: 60px;
+	/*top: 0;*/
+	/*right: 0;*/
+	text-align: right;
+	/*display: table-cell;*/
+	/*vertical-align: middle;*/
+}
+.div-look-bg h3{
+	font-family: "arial black";
+	font-size: 20px;
+	color: white;
+	margin-bottom: 160px;
+	/*top: 0;*/
+	/*right: 0;*/
+	text-align: right;
+	/*display: table-cell;*/
+	/*vertical-align: middle;*/
+}

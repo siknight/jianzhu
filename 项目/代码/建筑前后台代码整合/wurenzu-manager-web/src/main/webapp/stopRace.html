@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h3>结束正在进行的比赛</h3>
+
+			
+			
+			<table id="content2">
+				<tr>
+					<td>id</td>
+					<td>比赛名</td>
+					<td>期数</td>
+					<td>海报</td>
+					<td>比赛描述</td>
+					<td>比赛状态</td>
+					<td>操作</td>
+				</tr>
+			</table>
+			<span id="updateinfo03" style="color: red;"> </span>
+			<span id="updateinfo04" style="color: green;"> </span>
+		</div>
+     <script type="text/javascript"
+		src="/manager/lib/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/server.js"></script>
+	<script>
+	 var tr_id=1;
+	$(function(){
+		webIntercepter();
+		selectRaceByStatus();
+	});
+	
+	
+	
+	function webIntercepter(){
+			var manager_name=window.localStorage.getItem("name");
+			var token=window.localStorage.getItem("token");
+			if(manager_name==null||manager_name==""||token==null||token==""){
+				window.location.href="/login.html";
+				return;
+			}
+		}
+			function selectRaceByStatus(){
+				
+				$.ajax({
+					    url:"/manager/race/status",
+			            type:"get",
+			            dataType:"json",
+			            data:{"status":1},
+			            success:function(result){
+			            	console.info("result.code=="+result.code);
+			            	if(result.code==0){
+			            		var data=result.data;
+			            		if(data==""){
+			            			$("#updateinfo03").html("当前没有比赛正在进行");
+			            			return;
+			            		}
+			            		
+			            			
+			            			var str='';
+			            			
+			            			str+='<tr > <td>'+tr_id+'</td> <td>'+data.raceName+'</td> <td>第'+data.period+'期</td><td><img src="'+data.imgUrl+'"  style="width:50px;heigth:50px;" alt="图片"></td>  <td>'+data.details+'</td> <td><span id="updateinfo03" style="color: red;"> 该比赛正在进行</span></td><td><button onclick="stopRace(this,'+data.id+');">暂停比赛</button></td>  </tr>';
+			            			
+			            			$("#content2").append(str);
+			            		
+			            		
+			            	}
+			            	
+			            },
+			            error:function(){
+			            	alert("网络错误，请稍后再试...");
+			            }
+					
+				});
+				
+			} 
+			
+			function stopRace(_this,id){
+				if(confirm("确定停止吗(停止后不可恢复)？")){
+						$.ajax({
+						    url:managerserver+"/manager/race/id",
+				            type:"put",
+				            dataType:"json",
+				            data:{"id":id},
+				            success:function(result){
+				            	console.info("result.code=="+result.code);
+				            	if(result.code==0){
+				            		$(_this).parent().parent().remove();
+				            		$("#updateinfo03").html("当前没有比赛正在进行");
+				            		
+				            	}
+				            	
+				            },
+				            error:function(){
+				            	alert("网络错误，请稍后再试...");
+				            }
+						
+					});
+						
+				}
+			
+			}
+		
+	
+	</script>
+
+</body>
+</html>

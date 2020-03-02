@@ -1,0 +1,597 @@
+<style type="text/css">
+	
+	ul{list-style-type: none;}
+	h1{
+		font-family: "楷体";
+		color: white;
+		font-size: -webkit-xxx-large;
+		font-weight:bold;
+		background: none;
+		transition: 0.2s;
+		opacity: 0;
+		/*visibility: visible;*/
+	}
+	/*****************************************************/
+	/*欢迎界面首界面的框局DIV*/
+	.box{
+		position: fixed;
+		z-index: 1;
+		margin-top:45px;
+		padding:0;
+		width: 100%;
+		height: 100%;
+		visibility: visible;
+	}
+	/***********************************************登录中间区域*******************************************/
+	/*外层*/
+	.div-login{
+		position: fixed;
+		z-index: 0;
+		margin-left: 22%;
+		/*margin-right: 30%;*/
+		width: 60%;
+		height: 400px;
+		/*background-color: wheat;*/
+		/*background: none;*/
+		top: 150px;
+		/*text-align: center;*/
+		background: rgba(0,0,0,0.7);
+		border: 2.5px solid;
+		border-color: deepskyblue;
+		box-shadow: 5px 10px 10px deepskyblue;
+		border-radius:25px;
+/*		padding-top: 70px;*/
+		/*padding-left: 38%;*/
+		/*visibility: hidden;*/
+	}
+	/*内层*/
+	.div-login-tableOut{
+		position: fixed;
+		z-index: 0;
+		margin-left: 25%;
+		width: 55%;
+		height: 300px;
+		flex-direction: column; 
+		background: none;
+		/*background-color: wheat;*/
+		top: 200px;
+	}
+	/*.div-login-tableOut a{
+		background: none;
+		color: red;
+	}*/
+	/************ROW1**************/
+	.div-login-table-row1{
+		position: fixed;
+		z-index: 0;
+		width: 55%;
+		height: 70px;
+		background: none;
+		/*background-color: green;*/
+		top: 200px;
+	}
+	.div-login-table-row1 label{
+		background: none;
+		position: fixed;
+		margin-left: 5%;
+		margin-top: 25px;
+		font-family: "楷体";
+		font-size: x-large;
+		color: white;
+	}
+	.div-login-table-row1 input{
+		/*background: none;*/
+		background-color:rgba(0, 188, 212, 0.7);
+		position: fixed;
+		margin-left: 13%;
+		margin-top: 5px;
+		 outline: none;
+         flex: 1;
+         width: 40%;
+         border: 2.5px solid;
+         border-color: deepskyblue;
+         border-radius: 10px ;
+         height: 55px;
+         text-align: center;
+         font-family :"arial black";
+         color: white;
+	}
+	/************ROW2****************/
+	.div-login-table-row2{
+		position: fixed;
+		z-index: 0;
+		width: 55%;
+		height: 70px;
+		background: none;
+		/*background-color: green;*/
+		top: 300px;
+	}
+	.div-login-table-row2 label{
+		background: none;
+		position: fixed;
+		margin-left: 5%;
+		margin-top: 25px;
+		font-family: "楷体";
+		font-size: x-large;
+		color: white;
+	}
+	.div-login-table-row2 input{
+		/*background: none;*/
+		background-color:rgba(0, 188, 212, 0.7);
+		position: fixed;
+		margin-left: 13%;
+		margin-top: 5px;
+		 outline: none;
+         flex: 1;
+         width: 40%;
+         border: 2.5px solid;
+         border-color: deepskyblue;
+         border-radius: 10px ;
+         height: 55px;
+         text-align: center;
+         font-family :"arial black";
+         color: white;
+	}
+	.div-login-table-row3{
+		position: fixed;
+		z-index: 0;
+		width: 60%;
+		height: 50px;
+		background: none;
+		/*background-color: darkcyan;*/
+		/*float: left;*/
+		top: 420px;
+		/*text-align: center;*/
+		/*padding-top: 70px;
+		padding-left: 38%;*/
+	}
+	.div-login-table-row3 input{
+		background-color: rgba(244, 22, 7, 0.7);
+		position: fixed;
+		margin-left: 8%;
+		margin-top: 5px;
+		 outline: none;
+         flex: 1;
+         width: 40%;
+         border: 2.5px solid;
+         border-color: deepskyblue;
+         border-radius: 10px ;
+         height: 55px;
+         text-align: center;
+         font: "楷体";
+         color: white;
+	}
+	/***********************************************注册中间区域*******************************************/
+	/*外层*/
+	.div-register{
+		position: fixed;
+		z-index: 0;
+		margin-left: 22%;
+		/*margin-right: 30%;*/
+		width: 60%;
+		height: 400px;
+		/*background-color: wheat;*/
+		/*background: none;*/
+		top: 150px;
+		/*text-align: center;*/
+		background: rgba(0,0,0,0.7);
+		border: 2.5px solid;
+		border-color: deepskyblue;
+		box-shadow: 5px 10px 10px deepskyblue;
+		border-radius:25px;
+/*		padding-top: 70px;*/
+		/*padding-left: 38%;*/
+		/*visibility: hidden;*/
+	}
+	/*内层*/
+	.div-register-tableOut{
+		position: fixed;
+		z-index: 0;
+		margin-left: 25%;
+		width: 55%;
+		height: 300px;
+		flex-direction: column; 
+		background: none;
+		/*background-color: wheat;*/
+		top: 200px;
+	}
+	.div-register-tableOut a{
+		background: none;
+		color: red;
+	}
+	
+	/************ROW1**************/
+	.div-register-table-row1{
+		position: fixed;
+		z-index: 0;
+		width: 56%;
+		height: 70px;
+		background: none;
+		/*background-color: green;*/
+		/*float: left;*/
+		top: 200px;
+		/*text-align: center;*/
+		/*padding-top: 70px;*/
+		/*padding-left: 38%;*/
+	}
+	.div-register-table-row1 label{
+		background: none;
+		position: fixed;
+		margin-left: 4%;
+		margin-top: 25px;
+		font-family: "楷体";
+		font-size: x-large;
+		color: white;
+	}
+	.div-register-table-row1 input{
+		/*background: none;*/
+		background-color:rgba(0, 188, 212, 0.7);
+		position: fixed;
+		margin-left: 13%;
+		margin-top: 5px;
+		 outline: none;
+         flex: 1;
+         width: 40%;
+         border: 2.5px solid;
+         border-color: deepskyblue;
+         border-radius: 10px ;
+         height: 55px;
+         text-align: center;
+         font-family :"arial black";
+         color: white;
+	}
+	/************ROW2****************/
+	.div-register-table-row2{
+		position: fixed;
+		z-index: 0;
+		width: 56%;
+		height: 70px;
+		background: none;
+		/*background-color: red;*/
+		/*float: left;*/
+		top: 270px;
+		/*text-align: center;*/
+		/*padding-top: 70px;
+		padding-left: 38%;*/
+	}
+	.div-register-table-row2 label{
+		background: none;
+		position: fixed;
+		margin-left: 4%;
+		margin-top: 25px;
+		font-family: "楷体";
+		font-size: x-large;
+		color: white;
+	}
+	.div-register-table-row2 input{
+		/*background: none;*/
+		background-color:rgba(0, 188, 212, 0.7);
+		position: fixed;
+		margin-left: 13%;
+		margin-top: 5px;
+		 outline: none;
+         flex: 1;
+         width: 40%;
+         border: 2.5px solid;
+         border-color: deepskyblue;
+         border-radius: 10px ;
+         height: 55px;
+         text-align: center;
+         font-family :"arial black";
+         color: white;
+	}
+	/************ROW3****************/
+	.div-register-table-row3{
+		position: fixed;
+		z-index: 0;
+		width: 56%;
+		height: 70px;
+		background: none;
+		/*background-color: palegreen;*/
+		/*float: left;*/
+		top: 340px;
+		/*text-align: center;*/
+		/*padding-top: 70px;
+		padding-left: 38%;*/
+	}
+	.div-register-table-row3 label{
+		background: none;
+		position: fixed;
+		margin-left: 4%;
+		margin-top: 25px;
+		font-family: "楷体";
+		font-size: x-large;
+		color: white;
+	}
+	.div-register-table-row3 input{
+		/*background: none;*/
+		background-color:rgba(0, 188, 212, 0.7);
+		position: fixed;
+		margin-left: 13%;
+		margin-top: 5px;
+		outline: none;
+        flex: 1;
+        width: 40%;
+        border: 2.5px solid;
+        border-color: deepskyblue;
+        border-radius: 10px ;
+        height: 55px;
+        text-align: center;
+        font-family :"arial black";
+        color: white;
+	}
+	/************ROW7---按钮****************/
+	.div-register-table-row7{
+		position: fixed;
+		z-index: 0;
+		width: 60%;
+		height: 50px;
+		background: none;
+		/*background-color: darkcyan;*/
+		/*float: left;*/
+		top: 420px;
+		/*text-align: center;*/
+		/*padding-top: 70px;
+		padding-left: 38%;*/
+	}
+	.div-register-table-row7 input{
+		background-color: rgba(244, 22, 7, 0.7);
+		position: fixed;
+		margin-left: 10%;
+		margin-top: 5px;
+		 outline: none;
+         flex: 1;
+         width: 40%;
+         border: 2.5px solid;
+         border-color: deepskyblue;
+         border-radius: 10px ;
+         height: 55px;
+         text-align: center;
+         font: "楷体";
+         color: white;
+	}
+	/************************************************************************************************/
+	/*宣传字DIV*/
+	.div-words{
+		position: fixed;
+		z-index: 2;
+		width: 100%;
+		height: 200px;
+		background: none;
+		top: 280px;
+		text-align: center;
+		background: rgba(0,0,0,0);
+		padding-top: 70px;
+		padding-left: 38%;
+		visibility: visible;
+	}
+	/*上导航DIV外部框架*/
+	.div-bar1{
+		z-index: 2;
+		position: fixed;
+		margin-top: 20px;
+		/*background-color: black;*/
+		width: 100%;
+		height: 70px;
+		background: rgba(0,0,0,0.6);
+	}
+	/**************上导航DIV内容**************/
+	/*上导航栏左侧*/
+	.div-bar1-container2{
+		/*display: flex;
+		justify-content: flex-start;*/
+		z-index: 3;
+		position: absolute;
+		background: none;
+		left: 10%;
+		bottom: 0;
+		width: 450px;
+		height: 45px;
+	}
+	
+	.div-bar1-container2 a{ 
+		font-size:large;
+		z-index: 3;
+		background: none;
+		font-family: "宋体";
+		color: white;
+		position: absolute;
+		bottom: 25%;
+		text-decoration: none;
+	}
+	/*浏览展品 获奖展示(文化类，陈列类，健康类，别墅类，住房类，宗教类，学校类，购物类，运动类，运输类，办公类)专家团队 新闻中心  参加报名  协会文化() 邮箱：*/
+	  /*上左1*/
+	 .div-bar1-container2-list1{
+		z-index: 3;
+		position: absolute;
+		background:none;
+		/*background-color: red;*/
+		margin-left: 0;
+		/*display: inline;*/
+		bottom: 0;
+		width: 90px;
+		height: 45px;
+	}
+	  /*上左2*/
+	 .div-bar1-container2-list2{
+		z-index: 3;
+		position: absolute;
+	    margin-left: 90px;
+	    background:none;
+		bottom: 0;
+		width: 90px;
+		height: 45px;
+	}
+	  /*上左3*/
+	 .div-bar1-container2-list3{
+		z-index: 3;
+		position: absolute;
+	    margin-left: 180px;
+	    background:none;
+		bottom: 0;
+		width: 90px;
+		height: 45px;
+	}
+	  /*上左4*/
+	 .div-bar1-container2-list4{
+		z-index: 3;
+		position: absolute;
+	    margin-left: 270px;
+	    background:none;
+		/*background-color: yellow;*/
+		bottom: 0;
+		width: 90px;
+		height: 45px;
+	}
+	  /*上左5*/
+	 .div-bar1-container2-list5{
+		z-index: 3;
+		position: absolute;
+	    margin-left: 360px;
+	    background:none;
+		/*background-color: yellow;*/
+		bottom: 0;
+		width: 90px;
+		height: 45px;
+	}
+	/**************获奖展示下拉**************/
+	.div-bar1-bottom-price-extend{
+		z-index: 3;
+		position: fixed;
+		margin-top: 90px;
+		width: 100%;
+		height: 40px;
+		background: rgba(190,190,190,0.6);
+		/*background: #B5B5B5;*/
+		visibility: hidden;
+	}
+	.div-bar1-bottom-price-extend a{ 
+		font-size:medium;
+		font-weight: bolder;
+		z-index: 3;
+		background: none;
+		font-family: "宋体";
+		color: black;
+		position: absolute;
+		bottom: 8px;
+		text-decoration: none;
+	}
+	
+	
+	/******************************************/
+	 
+	/*上导航栏右侧*/
+	.div-bar1-container1{
+		z-index: 3;
+		position: absolute;
+		background:none;
+		right: 0;
+		bottom: 0;
+		width: 300px;
+		height: 45px;
+		visibility: visible;
+	}
+	.div-bar1-container1 a{
+		font-size:large;
+		z-index: 3;
+		background: none;
+		font-family: "宋体";
+		color: white;
+		position: absolute;
+		bottom: 25%;
+		text-decoration: none;
+	}
+	.div-bar1-container1 span{
+		font-size:large;
+		z-index: 3;
+		background: none;
+		font-family: "宋体";
+		color: white;
+		position: absolute;
+		bottom: 25%;
+		
+	}
+	.div-bar1-container6{
+		z-index: 4;
+		position: absolute;
+		background:none;
+		right: 0;
+		bottom: 0;
+		width: 300px;
+		height: 45px;
+		visibility: hidden;
+	}
+	.div-bar1-container6 a{
+		font-size:large;
+		z-index: 3;
+		background: none;
+		font-family: "宋体";
+		color: white;
+		position: absolute;
+		bottom: 25%;
+		text-decoration: none;
+	}
+	.div-bar1-container6 span{
+		font-size:large;
+		z-index: 3;
+		background: none;
+		font-family: "宋体";
+		color: white;
+		position: absolute;
+		bottom: 25%;
+		
+	}
+	
+	
+	/*下导航DIV外部框架*/
+	.div-bottom1{
+		position: fixed;
+		bottom: 0;
+		z-index: 2;
+		/*background-color: red;*/
+		width: 100%;
+		height: 120px;
+		background: rgba(0,0,0,0.6);
+	}
+	/*下导航DIV内容*/
+	/*下左*/
+	.div-bottom2-container{
+		z-index: 3;
+		position: absolute;
+		margin-left: 10%;
+		/*background-color: white;*/
+		background:none;
+		left: 0;
+		bottom: 0;
+		width: 600px;
+		height: 100%;
+	}
+	/*下右*/
+	.div-bottom1-container{
+		z-index: 3;
+		position: absolute;
+		background:none;
+		right: 0;
+		bottom: 0;
+		width: 300px;
+		height: 100%;
+	}
+	.div-bottom1 a{
+		font-size:large;
+		z-index: 3;
+		background: none;
+		font-family: "宋体";
+		color: white;
+		position: absolute;
+		top: 20%;
+		text-decoration: none;
+	}
+	/*****************************************************/
+	ul>li{
+		transition: 1.5s;
+		opacity: 0;
+	}
+	/*****************************************************/
+
+
+</style>

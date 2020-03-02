@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<div>
+		<h3>查看自己所给作品的评分</h3>			
+			<table id="content2">
+				<tr>
+					<td>id</td>
+					<td>作品名</td>
+					<td>作品描述</td>
+					<td>设计公司</td>
+					<td>公司描述</td>
+					<td>公司法人</td>
+					<td style="color:red;">我的评分</td>
+				</tr>
+			</table>
+			<h2 id="updateinfo03" style="color: red;"></h2>
+			<h2 id="updateinfo04" style="color: green;"></h2>
+			
+</div>
+<script type="text/javascript"
+		src="/manager/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/server.js"></script>
+<script>
+	var tr_id=1;
+	$(function(){
+		viewScore();
+	});
+	$(function(){
+			webIntercepter();
+			selectExportByroleId();
+		});
+	
+	function webIntercepter(){
+			var manager_name=window.localStorage.getItem("name");
+			var token=window.localStorage.getItem("token");
+			if(manager_name==null||manager_name==""||token==null||token==""){
+				window.location.href="/login.html";
+				return;
+			}
+		}
+	function viewScore(){
+		var id=window.localStorage.getItem("id");
+		console.info("该评委的id="+id);
+		$.ajax({
+			    url:"/manager/works/status",
+	            type:"get",
+	            dataType:"json",
+	            data:{"status":1},
+	            success:function(result){
+	            	if(result.code==0||result.code==3){ //查询成功
+	            		var data=result.data; //获取data
+		            	for(var i=0;i<data.length;i++){  //遍历这个data
+		            		 
+		            		var workname=data[i].workname;
+		            		var details=data[i].details;
+		            		var period=data[i].period;
+		            		var imgUrl=data[i].imgUrl;
+		            		var firmuser=data[i].firmuser; //获取firmuser
+		            		var firmname=firmuser.firmName; //设计公司全称
+		            		var image=firmuser.image;
+		            		var firmDetail=firmuser.firmDetail;
+		            		var email=firmuser.email;
+		            		var phone=firmuser.phone;
+		            		var represent=firmuser.represent
+		            		var address=firmuser.address;
+		            		var str='';
+		            		str+='<tr>';
+		            		str+='<td>'+tr_id+'</td>';
+		            		str+='<td>'+workname+'</td>';
+		            		str+='<td>'+details+'</td>';
+		            		str+='<td>'+firmname+'</td>';
+		            		str+='<td>'+firmDetail+'</td>';
+		            		str+='<td>'+represent+'</td>';
+		            		tr_id+=1;
+		            		if(result.code==3){
+		            			console.info("该作品尚未打分");
+            					str+='<td style="color:red;">该作品你尚未打分</td>';
+		            			
+		            			return ;
+		            		}
+		            		var exports=data[i].exports;
+		            		for(var j=0;j<exports.length;j++){
+		            			var exportsId=exports[j].id;
+		            			
+		            			if(id==exportsId){ //如果浏览器存储的id和评委id相同的话就查出该评委给的分和相关作品
+		            				console.info("id="+id+"exportsId="+exportsId);
+		            				var expertScore=exports[j].expertScore.expertscore;
+		            				console.info("查看自己的分数expertScore="+expertScore);
+		            				if(expertScore!=""&&expertScore!=null){
+		            					console.info("expertScore="+expertScore);
+			            				str+='<td style="color:red;">'+expertScore+'</td>';
+		            				}else{
+		            					console.info("该作品尚未打分");
+		            					str+='<td style="color:red;">该作品你尚未打分</td>';
+		            					
+		            				}
+		            				
+		            			}
+		            			
+		            			
+		            		}
+		            		str+='</tr>';
+		            		
+		            		$("#content2").append(str);
+		            	
+		            	}
+	            	}
+	            	
+	            	
+	            }
+		});
+	}
+
+</script>
+
+</body>
+</html>

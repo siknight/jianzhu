@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div >
+	<h1>修改信息</h1>
+
+            爱名：<input  id="nick_name" type="text" value="" placeholder="请输入别名"><br><br>
+            性别：男<input id="man" name="sex" type="radio" value="男" checked="checked"/>
+		女<input id="woman" name="sex" type="radio"  value="女"/><br><br>
+	 手机号：<input  id="phone" type="text" value="" placeholder="请输入手机号"><br><br>
+              邮箱：<input  id="email" type="text" value="" placeholder="请输入邮箱"><br><br>
+	个性签名:<br/><textarea id="signature" rows="10" cols="50"></textarea>
+	<h2 id="updateinfo" style="color:green;"></h2>
+	<button id="update">修改</button>
+</div>	
+	
+<script type="text/javascript" src="/js/server.js"></script>
+<script type="text/javascript" src="/manager/lib/jquery/1.9.1/jquery.min.js"></script> 
+	
+	<script>
+		
+		$(function(){
+			webIntercepter();
+			updateMyselfInfo();
+		});
+	
+	
+		function webIntercepter(){
+   			var manager_name=window.localStorage.getItem("name");
+   			var token=window.localStorage.getItem("token");
+   			if(manager_name==null||manager_name==""||token==null||token==""){
+   				window.location.href="/login.html";
+   				return;
+   			}
+   		}
+		function updateMyselfInfo(){
+			
+	        var nick_name=window.localStorage.getItem("nick_name");
+	        var sex=window.localStorage.getItem("sex");
+	        var signature=window.localStorage.getItem("signature");
+	        var phone=window.localStorage.getItem("phone");
+	        var email=window.localStorage.getItem("email");
+	        
+	        if(nick_name!="")
+	        	$("#nick_name").attr('value',nick_name);
+	        
+	        if(phone!="")
+	        	$("#phone").attr('value',phone);
+	        if(email!="")
+	        	$("#email").attr('value',email);
+	        //性别
+	        
+	        
+	        if(sex!=""){
+	        	console.info("sex="+sex);
+	        	if(sex=='男'){
+	        		$("#man").attr("checked","checked");
+	        	}else if(sex=="女"){
+	        		$("#woman").attr("checked","checked");
+	        	}else{
+	        		$("#man").attr("checked","checked");
+	        	}
+	        	
+	        }
+	        //个性签名
+	        if(signature!=""){
+	        	console.info("signature="+signature);
+	        	$("#signature").val(signature);
+	        }
+	        	
+	        	
+		}
+		
+		$("#update").click(function(){
+			$("#updateinfo").html("");
+			
+			if(confirm("确定修改吗？")){
+				var nick_name =$("#nick_name").val();
+				var sex =$('input[name="sex"]:checked').val();
+				var phone =$("#phone").val();
+				var email =$("#email").val();
+				var signature=$("#signature").val();
+				
+				var id=window.localStorage.getItem("id");
+			
+				console.info("nick_name="+nick_name);
+				console.info("sex="+sex);
+				console.info("signature="+signature);
+				$.ajax({
+					    url:"/manager/myself",
+			            type:"put",
+			            dataType:"json",
+			            data:{"nick_name":nick_name,"sex":sex,"signature":signature,"phone":phone,"email":email,"id":id},
+			            success:function (result) {
+			            	if(result.code==0){
+			            		
+				            	window.localStorage.setItem("nick_name",nick_name);
+				      	        window.localStorage.setItem("sex",sex);
+				      	        window.localStorage.setItem("signature",signature);
+				      	        window.localStorage.setItem("phone",phone);
+				      	        window.localStorage.setItem("email",email);
+				      	        $("#updateinfo").html("恭喜你,修改成功");
+			            	}
+			            
+			            },
+			            error:function(){
+			            	alert("网络错误");
+			            }
+					
+				});
+				
+			}
+			
+		});
+	
+	</script>
+	
+	
+	
+
+
+</body>
+
+
+</html>

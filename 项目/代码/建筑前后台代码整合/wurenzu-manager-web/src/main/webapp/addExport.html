@@ -1,0 +1,242 @@
+`<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div>
+		<div float:left>
+			<h3>添加评委</h3>
+			用户名：<input id="name" type="text" value="" placeholder="请输入用户名"><br />
+			性别：男<input id="man" name="sex" type="radio" value="男"
+				checked="checked" /> 女<input id="woman" name="sex" type="radio"
+				value="女" /><br> 密码：<input id="password" type="password"
+				value="" placeholder="请输入密码"><br /> 确认密码：<input
+				id="password2" type="password" value="" placeholder="请输入密码"><br />
+			手机号：<input id="phone" type="text" value="" placeholder="请输入手机号"><br />
+		             邮箱 ：<input id="email" type="text" value="" placeholder="请输入邮箱"><br />
+			头像:<input id="touxiang" type="file" ><br />
+			评委描述：<br />
+			<textarea id="details" rows="5" cols="50"></textarea>
+
+			<h2 id="updateinfo01" style="color: red;"></h2>
+			<h2 id="updateinfo02" style="color: green;"></h2>
+			<button id="add">添加</button>
+		</div>
+
+
+
+		<div style="float: left">
+			<h3>已经添加的评委</h3>
+			
+			<table id="content2">
+				<tr>
+					<td>id</td>
+					<td>用户名</td>
+					<td>性别</td>
+					<td>手机号</td>
+					<td>邮箱</td>
+					<td>头像</td>
+					<td>描述</td>
+					<td>操作</td>
+				</tr>
+			</table>
+			<h2 id="updateinfo03" style="color: red;"></h2>
+			<h2 id="updateinfo04" style="color: green;"></h2>
+		</div>
+	</div>
+	<script type="text/javascript"
+		src="/manager/lib/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/server.js"></script>
+	<script>
+   
+   		var tr_id=1;
+   		$(function(){
+   			webIntercepter();
+   			selectExportByroleId();
+   		});
+   		
+   		function webIntercepter(){
+   			var manager_name=window.localStorage.getItem("name");
+   			var token=window.localStorage.getItem("token");
+   			if(manager_name==null||manager_name==""||token==null||token==""){
+   				window.location.href="/login.html";
+   				return;
+   			}
+   		}
+   
+   		//查询所有评委信息
+    	function selectExportByroleId(){
+    		
+    		$.ajax({
+    			   url:"/manager/roleid",
+		            type:"get",
+		            dataType:"json",
+		            data:{},
+		            success:function(result){
+		            	
+		            	if(result.code==0){
+		            		var data=result.data;
+		            		for(var i=0;i<data.length;i++){
+		            		
+		            		
+		            			var str='';
+		            			
+		            			str+='<tr > <td>'+tr_id+'</td> <td>'+data[i].name+'</td> <td>'+data[i].sex+'</td> <td>'+data[i].phone+'</td> <td>'+data[i].email+'</td><td><img src="'+data[i].image+'"  style="width:50px;heigth:50px;" alt="图片"></td><td>'+data[i].details+'</td> <td><button id="'+data[i].name+'" onclick="deleteByName(this,\''+data[i].name+'\')">删除</button></td> </tr>';
+		            			tr_id+=1;
+		            			$("#content2").append(str);
+		            			
+		            			
+		            		    
+		            		}
+		            		
+		            	}
+		            	
+		            },
+		            error:function(){
+		            	alert("网络错误，请稍后再试...");
+		            }
+    			
+    		});
+    		
+    	} 
+    	
+    	
+    	//删除指定id评委
+    	function deleteByName(_this,name){
+    		
+    		 $("#updateinfo01").html("");
+    		 $("#updateinfo02").html("");
+    		 $("#updateinfo03").html("");
+    		 $("#updateinfo04").html("");
+    		 console.info("删除方法执行了");
+    		
+    		
+    		if(confirm("确定删除吗？")){
+		    	$.ajax({
+					    url:"/manager/exportdelete/"+name,
+			            type:"delete",
+			            dataType:"json",
+			            success:function(result){
+			            	if(result.code==0){
+			            		console.info("_this");
+			            		$(_this).parent().parent().remove();
+			            		 //$(this).parents('tr').remove();
+			            		 tr_id-=1;
+			            		 $("#updateinfo04").html("删除成功");
+			            		// window.location.reload()
+			            		
+			            		
+			            		 
+			            	}
+			            },
+			            error:function(){
+			            	alert("网络错误,请售后再试....");
+			            }
+				});
+    		}
+    	}
+    	
+    	
+    	
+    	//添加评委
+   
+   		$("#add").click(function(){
+	   		 $("#updateinfo01").html("");
+			 $("#updateinfo02").html("");
+			 $("#updateinfo03").html("");
+			 $("#updateinfo04").html("");
+			
+   			var name =$("#name").val();
+			var sex =$('input[name="sex"]:checked').val();
+			var password=$("#password").val();
+			var password2=$("#password2").val();
+			var details=$("#details").val();
+			var phone=$("#phone").val();
+			var email=$("#email").val();
+			
+			if(name==""){
+				 $("#updateinfo01").html("用户名为空,请重新输入");
+				 return;
+			}
+			if(password==""){
+				 $("#updateinfo01").html("密码为空,请重新输入");
+				 return ;
+			}
+			if(password2==""){
+				 $("#updateinfo01").html("确认密码为空,请重新输入");
+				 return ;
+			}
+			if(details==""){
+				 $("#updateinfo01").html("描述为空,请重新输入");
+				 return ;
+			}
+			
+			if(phone==""){
+				 $("#updateinfo01").html("手机号为空,请重新输入");
+				 return ;
+			}
+			if(email==""){
+				 $("#updateinfo01").html("邮箱为空,请重新输入");
+				 return ;
+			}
+			
+			
+			if(password!=password2){
+				 $("#updateinfo01").html("两次新密码输入不一样,修改失败,请重新输入");
+				 return;
+			}
+			if($("#touxiang")[0].files[0]==null||$("#touxiang")[0].files[0]==""){
+		 		  $("#updateinfo01").html("对不起,你还未添加头像,请添加后再提交");
+					 return ;
+		 	}
+			
+			//Formdata提交图片
+			var formData = new FormData();
+			 formData.append("name",name);
+			 formData.append("sex",sex);
+			 formData.append("password",password);
+			 formData.append("details",details);
+			 formData.append("phone",phone);
+			 formData.append("email",email);
+			//Formdata提交图片
+			 formData.append("uploadFile", $("#touxiang")[0].files[0]);
+			 
+			$.ajax({
+				    url:"/manager/exportadd",
+				  //  url:managerserver+"/manager/exportadd",
+		            type:"post",
+		          //  dataType:"json",
+		           // data:{"name":name,"sex":sex,"password":password,"details":details},
+		            data: formData,
+       				processData: false,
+       				contentType: false,
+		            success:function(result){
+		            	console.info("进入添加评委成功入口");
+		            	if(result.code==0){
+		            		 $("#updateinfo02").html("恭喜你,添加成功");
+
+		            			var str='';
+		            			console.info("image="+result.data.image)
+		            			str+='<tr > <td>'+tr_id+'</td> <td>'+name+'</td> <td>'+sex+'</td><td>'+phone+'</td><td>'+email+'</td><td><img src="'+result.data.img+'"  style="width:50px;heigth:50px;" alt="图片"></td> <td>'+details+'</td> <td><button id="'+name+'" onclick="deleteByName(this,\''+name+'\')">删除</button></td> </tr>';
+		            			tr_id+=1;
+		            			
+		            			$("#content2").append(str);
+		            	}else if(result.code==2){
+		            		 $("#updateinfo01").html("该评委已经添加");
+		            	}
+		            },
+		            error:function(){
+		            	alert("网络错误,请售后再试....");
+		            }
+			});
+			
+   		});
+   		
+   
+   
+   
+   </script>
+</body>
+</html>
